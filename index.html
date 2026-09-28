@@ -68,7 +68,7 @@
         </div>
     </header>
 
-    <!-- LANDING / WELCOME VIEW (Shown if user hasn't signed in yet) -->
+    <!-- LANDING / WELCOME VIEW -->
     <div id="landing-view" class="max-w-4xl mx-auto px-4 py-16 text-center space-y-8 animate-fade-in">
         <div class="space-y-4">
             <span class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20">
@@ -77,7 +77,7 @@
             </span>
             <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight">Never miss a dose. Stay connected with care.</h2>
             <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                AuraMed allows users to track daily morning, afternoon, and night prescriptions with built-in calendar tracking, automatic 9 AM, 1 PM, and 8 PM master caregiver escalation alerts, and proxy overrides.
+                AuraMed empowers users to track daily morning, afternoon, and night prescriptions with built-in calendar tracking, automatic 9 AM, 1 PM, and 8 PM master caregiver escalation alerts, and proxy overrides.
             </p>
         </div>
 
@@ -94,8 +94,8 @@
                 <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center">
                     <i data-lucide="bell-ring" class="w-5 h-5"></i>
                 </div>
-                <h3 class="font-bold text-base">Caregiver Alerts</h3>
-                <p class="text-xs text-gray-500">Automated 9am, 1pm, and 8pm checks with 15-minute escalation loops and proxy sign-off.</p>
+                <h3 class="font-bold text-base">Caregiver Network</h3>
+                <p class="text-xs text-gray-500">Master users monitor multiple linked users with automated escalation checks and proxy sign-off.</p>
             </div>
 
             <div class="glass-panel p-6 rounded-3xl apple-shadow space-y-3">
@@ -115,7 +115,7 @@
         </div>
     </div>
 
-    <!-- MAIN APP DASHBOARD (Hidden until Sign In) -->
+    <!-- MAIN APP DASHBOARD -->
     <main id="app-dashboard" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8 hidden animate-fade-in">
 
         <!-- Escalation Alert Banner for Master Users -->
@@ -331,44 +331,44 @@
         <div id="tab-network" class="space-y-6 hidden animate-fade-in">
             <div class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow space-y-6">
                 <div>
-                    <h3 class="text-xl font-bold">Master Code Binding & Permissions</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Link accounts using your unique 4-digit master code to enable caregiver alerts.</p>
+                    <h3 class="text-xl font-bold">Master Code Binding & Visibility</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Link accounts with master codes. Users see their master; masters see all linked users.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Master Code / Binding Card -->
                     <div class="bg-white/60 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
                                 <i data-lucide="key" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm">Your Master Code</h4>
-                                <p class="text-xs text-gray-500">Share this code with users to link monitoring</p>
+                                <h4 class="font-bold text-sm">Master Code Status</h4>
+                                <p class="text-xs text-gray-500">Unique secure 4-digit reference</p>
                             </div>
                         </div>
                         <div class="text-3xl font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 py-3 px-4 rounded-xl text-center" id="display-master-code">
                             ----
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-500 mb-1">Bind to a Master Code</label>
-                            <div class="flex space-x-2">
-                                <input type="text" id="input-bind-code" maxlength="4" placeholder="Enter 4-digit code" class="flex-1 px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 text-sm focus:outline-none focus:border-indigo-500 font-mono">
-                                <button onclick="handleBindMasterCode()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer">Bind</button>
-                            </div>
+                        <div id="binding-action-box">
+                            <!-- Injected dynamically based on role -->
                         </div>
                     </div>
 
+                    <!-- Visibility / Managed Users Card -->
                     <div class="bg-white/60 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-500 flex items-center justify-center">
-                                <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                                <i data-lucide="users" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm">Caregiver Permissions</h4>
-                                <p class="text-xs text-gray-500">Allow master monitoring & 9am/1pm/8pm escalation</p>
+                                <h4 class="font-bold text-sm" id="visibility-card-title">Network Visibility</h4>
+                                <p class="text-xs text-gray-500" id="visibility-card-subtitle">Connected accounts & caregivers</p>
                             </div>
                         </div>
-                        <div class="space-y-3" id="permissions-container"></div>
+                        <div class="space-y-3" id="visibility-content-box">
+                            <!-- Injected dynamically -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -451,18 +451,23 @@
     <!-- Application Script -->
     <script>
         const firebaseConfig = {
-          apiKey: "AIzaSyAk9L9jZ3YuAbDUz2vW6oD6QLv5Z9qVOJs",
-          authDomain: "aurameds.firebaseapp.com",
-          projectId: "aurameds",
-          storageBucket: "aurameds.firebasestorage.app",
-          messagingSenderId: "1047224137032",
-          appId: "1:1047224137032:web:f3576f32cb89b460aeef7d",
-          measurementId: "G-XYMX9G8WP4"
-        };
+  apiKey: "AIzaSyAk9L9jZ3YuAbDUz2vW6oD6QLv5Z9qVOJs",
+  authDomain: "aurameds.firebaseapp.com",
+  projectId: "aurameds",
+  storageBucket: "aurameds.firebasestorage.app",
+  messagingSenderId: "1047224137032",
+  appId: "1:1047224137032:web:f3576f32cb89b460aeef7d",
+  measurementId: "G-XYMX9G8WP4"
+};
 
 
         let state = {
             currentUser: null, // null triggers Landing View
+            // Global directory of registered users in the network for master/user visibility binding
+            registeredUsers: [
+                { email: 'master@auramed.app', name: 'Dr. Sarah Master', role: 'master', masterCode: '8888', boundMasterCode: '' },
+                { email: 'user1@auramed.app', name: 'Alex Morgan', role: 'user', masterCode: '2026', boundMasterCode: '8888' }
+            ],
             tablets: [
                 { id: 't1', name: 'Multivitamin', dosage: '1 tablet after breakfast', slot: 'morning' },
                 { id: 't2', name: 'Calcium D3', dosage: '1 tablet after lunch', slot: 'afternoon' },
@@ -476,11 +481,12 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('auramed_public_state_v2');
+            const saved = localStorage.getItem('auramed_public_state_v3');
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
                     state.currentUser = parsed.currentUser || null;
+                    state.registeredUsers = parsed.registeredUsers || state.registeredUsers;
                     state.tablets = parsed.tablets || state.tablets;
                     state.logs = parsed.logs || {};
                 } catch(e) { console.error(e); }
@@ -488,8 +494,9 @@
         }
 
         function saveState() {
-            localStorage.setItem('auramed_public_state_v2', JSON.stringify({
+            localStorage.setItem('auramed_public_state_v3', JSON.stringify({
                 currentUser: state.currentUser,
+                registeredUsers: state.registeredUsers,
                 tablets: state.tablets,
                 logs: state.logs
             }));
@@ -554,15 +561,23 @@
             const name = document.getElementById('auth-name').value;
             const role = document.getElementById('auth-role').value;
 
-            state.currentUser = {
-                email,
-                name,
-                role,
-                masterCode: state.currentUser?.masterCode || String(Math.floor(1000 + Math.random() * 9000)),
-                boundMasterCode: state.currentUser?.boundMasterCode || '',
-                monitorPermission: true
-            };
+            // Check if user already exists in directory
+            let existing = state.registeredUsers.find(u => u.email === email);
+            if (!existing) {
+                existing = {
+                    email,
+                    name,
+                    role,
+                    masterCode: String(Math.floor(1000 + Math.random() * 9000)),
+                    boundMasterCode: ''
+                };
+                state.registeredUsers.push(existing);
+            } else {
+                existing.name = name;
+                existing.role = role;
+            }
 
+            state.currentUser = existing;
             saveState();
             closeAuthModal();
             renderApp();
@@ -570,10 +585,16 @@
 
         function handleBindMasterCode() {
             const code = document.getElementById('input-bind-code').value;
+            const foundMaster = state.registeredUsers.find(u => u.role === 'master' && u.masterCode === code);
+            
             if (code.length === 4) {
                 state.currentUser.boundMasterCode = code;
+                // Sync in registeredUsers directory
+                let reg = state.registeredUsers.find(u => u.email === state.currentUser.email);
+                if (reg) reg.boundMasterCode = code;
+
                 saveState();
-                alert('Successfully bound to master code: ' + code);
+                alert(foundMaster ? `Successfully bound to Master Caregiver: ${foundMaster.name} (${code})` : `Successfully bound to Master Code: ${code}`);
                 renderApp();
             } else {
                 alert('Please enter a valid 4-digit code.');
@@ -677,10 +698,84 @@
             document.getElementById('role-text-badge').innerText = `${state.currentUser.role.toUpperCase()} PROFILE`;
             document.getElementById('hero-greeting').innerText = `Welcome, ${state.currentUser.name}`;
             document.getElementById('hero-subtitle').innerText = state.currentUser.role === 'master'
-                ? 'Master Caregiver Dashboard: Monitoring linked accounts with automated 9am/1pm/8pm alerts and proxy override.'
+                ? 'Master Caregiver Dashboard: Monitoring linked users with automated 9am/1pm/8pm alerts and proxy override.'
                 : 'User Adherence Dashboard: Track daily medications synced with master code ' + (state.currentUser.boundMasterCode || 'Unbound');
 
             document.getElementById('display-master-code').innerText = state.currentUser.masterCode;
+
+            // Render Master Link & Visibility Section based on role
+            const bindingBox = document.getElementById('binding-action-box');
+            const visibilityTitle = document.getElementById('visibility-card-title');
+            const visibilitySubtitle = document.getElementById('visibility-card-subtitle');
+            const visibilityContent = document.getElementById('visibility-content-box');
+
+            if (state.currentUser.role === 'user') {
+                const boundMaster = state.registeredUsers.find(u => u.role === 'master' && u.masterCode === state.currentUser.boundMasterCode);
+                
+                bindingBox.innerHTML = `
+                    <label class="block text-xs font-semibold text-gray-500 mb-1">Bind to Master Code</label>
+                    <div class="flex space-x-2">
+                        <input type="text" id="input-bind-code" maxlength="4" value="${state.currentUser.boundMasterCode || ''}" placeholder="Enter 4-digit code" class="flex-1 px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 text-sm focus:outline-none focus:border-indigo-500 font-mono">
+                        <button onclick="handleBindMasterCode()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer">Bind</button>
+                    </div>
+                `;
+
+                visibilityTitle.innerText = "Linked Master Caregiver";
+                visibilitySubtitle.innerText = "Master monitoring your account";
+
+                if (boundMaster) {
+                    visibilityContent.innerHTML = `
+                        <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold">
+                                ${boundMaster.name.charAt(0)}
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-sm">${boundMaster.name}</h5>
+                                <p class="text-xs text-gray-500">${boundMaster.email} • Code: ${boundMaster.masterCode}</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (state.currentUser.boundMasterCode) {
+                    visibilityContent.innerHTML = `<div class="text-xs text-gray-500 italic p-3">Bound to Master Code: ${state.currentUser.boundMasterCode} (Pending confirmation)</div>`;
+                } else {
+                    visibilityContent.innerHTML = `<div class="text-xs text-gray-400 italic p-3">No master caregiver bound yet. Enter a 4-digit master code to link.</div>`;
+                }
+
+            } else {
+                // Master Caregiver view
+                bindingBox.innerHTML = `
+                    <div class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-xs text-indigo-600 dark:text-indigo-400 font-medium">
+                        You are registered as a Master Caregiver. Share your code <strong>${state.currentUser.masterCode}</strong> with users so they can link to you.
+                    </div>
+                `;
+
+                visibilityTitle.innerText = "Managed Users";
+                visibilitySubtitle.innerText = "All users bound to your master code";
+
+                const linkedUsers = state.registeredUsers.filter(u => u.role === 'user' && u.boundMasterCode === state.currentUser.masterCode);
+                if (linkedUsers.length === 0) {
+                    visibilityContent.innerHTML = `<div class="text-xs text-gray-400 italic p-3">No users currently bound to your master code (${state.currentUser.masterCode}).</div>`;
+                } else {
+                    visibilityContent.innerHTML = '';
+                    linkedUsers.forEach(usr => {
+                        const div = document.createElement('div');
+                        div.className = "p-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-between";
+                        div.innerHTML = `
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
+                                    ${usr.name.charAt(0)}
+                                </div>
+                                <div>
+                                    <div class="font-bold text-sm">${usr.name}</div>
+                                    <div class="text-xs text-gray-500">${usr.email}</div>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">Connected ✓</span>
+                        `;
+                        visibilityContent.appendChild(div);
+                    });
+                }
+            }
 
             const dayLogs = state.logs[state.currentDate] || {};
             ['morning', 'afternoon', 'night'].forEach(slot => {
