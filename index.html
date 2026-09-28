@@ -19,7 +19,7 @@
             border: 1px solid rgba(0, 0, 0, 0.06);
         }
         .dark .glass-panel {
-            background: rgba(22, 22, 25, 0.75);
+            background: rgba(22, 22, 25, 0.8);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -68,10 +68,57 @@
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+    <!-- LANDING / WELCOME VIEW (Shown if user hasn't signed in yet) -->
+    <div id="landing-view" class="max-w-4xl mx-auto px-4 py-16 text-center space-y-8 animate-fade-in">
+        <div class="space-y-4">
+            <span class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                <span>Next-Generation Healthcare Adherence</span>
+            </span>
+            <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight">Never miss a dose. Stay connected with care.</h2>
+            <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                AuraMed allows users to track daily morning, afternoon, and night prescriptions with built-in calendar tracking, automatic 9 AM, 1 PM, and 8 PM master caregiver escalation alerts, and proxy overrides.
+            </p>
+        </div>
 
-        <!-- Escalation Alert Banner for Master Users (9 AM, 1 PM, 8 PM + 15 min loop) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left pt-4">
+            <div class="glass-panel p-6 rounded-3xl apple-shadow space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                    <i data-lucide="check-square" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-bold text-base">Smart Schedule</h3>
+                <p class="text-xs text-gray-500">Easily organize pills across morning, afternoon, and night slots with one-tap acknowledgement.</p>
+            </div>
+
+            <div class="glass-panel p-6 rounded-3xl apple-shadow space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center">
+                    <i data-lucide="bell-ring" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-bold text-base">Caregiver Alerts</h3>
+                <p class="text-xs text-gray-500">Automated 9am, 1pm, and 8pm checks with 15-minute escalation loops and proxy sign-off.</p>
+            </div>
+
+            <div class="glass-panel p-6 rounded-3xl apple-shadow space-y-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                    <i data-lucide="cloud" class="w-5 h-5"></i>
+                </div>
+                <h3 class="font-bold text-base">Firebase Cloud Sync</h3>
+                <p class="text-xs text-gray-500">Secure user accounts and database persistence bound by unique 4-digit master codes.</p>
+            </div>
+        </div>
+
+        <div class="pt-6">
+            <button onclick="openAuthModal()" class="px-8 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base shadow-xl shadow-indigo-600/30 transition-all cursor-pointer inline-flex items-center space-x-2">
+                <span>Get Started Now</span>
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN APP DASHBOARD (Hidden until Sign In) -->
+    <main id="app-dashboard" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8 hidden animate-fade-in">
+
+        <!-- Escalation Alert Banner for Master Users -->
         <div id="master-alert-banner" class="hidden glass-panel border-l-4 border-l-rose-500 rounded-2xl p-4 sm:p-5 flex items-start justify-between gap-4 apple-shadow animate-fade-in">
             <div class="flex items-start space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0 mt-0.5 animate-pulse">
@@ -99,8 +146,8 @@
                         <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
                         <span id="role-text-badge">User Profile</span>
                     </span>
-                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight" id="hero-greeting">Welcome to AuraMed</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1" id="hero-subtitle">Secure cloud medication tracking with automated master caregiver alerts.</p>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight" id="hero-greeting">Welcome</h2>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1" id="hero-subtitle">Secure cloud medication tracking.</p>
                 </div>
 
                 <!-- Progress Ring / Stats -->
@@ -333,8 +380,8 @@
         <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full apple-shadow transform scale-95 transition-transform duration-300">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-lg font-bold">Welcome to AuraMed</h3>
-                    <p class="text-xs text-gray-500">Sign in or register your account</p>
+                    <h3 class="text-lg font-bold">Sign In / Register</h3>
+                    <p class="text-xs text-gray-500">Connect with your email and name</p>
                 </div>
                 <button onclick="closeAuthModal()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -343,12 +390,12 @@
 
             <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Email Address (Linked to Firebase)</label>
-                    <input type="email" id="auth-email" required placeholder="user@example.com" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Email Address</label>
+                    <input type="email" id="auth-email" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Full Name</label>
-                    <input type="text" id="auth-name" required placeholder="Alex Morgan" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <input type="text" id="auth-name" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Select Role Type</label>
@@ -379,11 +426,11 @@
             <form id="add-tablet-form" onsubmit="handleSaveTablet(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Tablet Name</label>
-                    <input type="text" id="input-name" required placeholder="e.g., Vitamin C" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <input type="text" id="input-name" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Dosage / Instructions</label>
-                    <input type="text" id="input-dosage" required placeholder="e.g., 1 tablet after dinner" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <input type="text" id="input-dosage" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Time Slot</label>
@@ -403,27 +450,19 @@
 
     <!-- Application Script -->
     <script>
-        // Firebase Configuration (Paste your credentials here to sync live with Firestore)
         const firebaseConfig = {
-            apiKey: "AIzaSyAk9L9jZ3YuAbDUz2vW6oD6QLv5Z9qVOJs",
-            authDomain: "aurameds.firebaseapp.com",
-            projectId: "aurameds",
-            storageBucket: "aurameds.firebasestorage.app",
-            messagingSenderId: "1047224137032",
-            appId: "1:1047224137032:web:f3576f32cb89b460aeef7d",
-            measurementId: "G-XYMX9G8WP4"
+          apiKey: "AIzaSyAk9L9jZ3YuAbDUz2vW6oD6QLv5Z9qVOJs",
+          authDomain: "aurameds.firebaseapp.com",
+          projectId: "aurameds",
+          storageBucket: "aurameds.firebasestorage.app",
+          messagingSenderId: "1047224137032",
+          appId: "1:1047224137032:web:f3576f32cb89b460aeef7d",
+          measurementId: "G-XYMX9G8WP4"
         };
 
 
         let state = {
-            currentUser: {
-                email: 'user@auramed.app',
-                name: 'Alex Morgan',
-                role: 'user', // 'user' or 'master'
-                masterCode: String(Math.floor(1000 + Math.random() * 9000)),
-                boundMasterCode: '',
-                monitorPermission: true
-            },
+            currentUser: null, // null triggers Landing View
             tablets: [
                 { id: 't1', name: 'Multivitamin', dosage: '1 tablet after breakfast', slot: 'morning' },
                 { id: 't2', name: 'Calcium D3', dosage: '1 tablet after lunch', slot: 'afternoon' },
@@ -437,22 +476,19 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('auramed_public_state');
+            const saved = localStorage.getItem('auramed_public_state_v2');
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
-                    state.currentUser = parsed.currentUser || state.currentUser;
+                    state.currentUser = parsed.currentUser || null;
                     state.tablets = parsed.tablets || state.tablets;
-                    state.logs = parsed.logs || state.logs;
-                    if (!state.currentUser.masterCode) {
-                        state.currentUser.masterCode = String(Math.floor(1000 + Math.random() * 9000));
-                    }
+                    state.logs = parsed.logs || {};
                 } catch(e) { console.error(e); }
             }
         }
 
         function saveState() {
-            localStorage.setItem('auramed_public_state', JSON.stringify({
+            localStorage.setItem('auramed_public_state_v2', JSON.stringify({
                 currentUser: state.currentUser,
                 tablets: state.tablets,
                 logs: state.logs
@@ -490,9 +526,15 @@
         }
 
         function openAuthModal() {
-            document.getElementById('auth-email').value = state.currentUser.email;
-            document.getElementById('auth-name').value = state.currentUser.name;
-            document.getElementById('auth-role').value = state.currentUser.role;
+            if (state.currentUser) {
+                document.getElementById('auth-email').value = state.currentUser.email;
+                document.getElementById('auth-name').value = state.currentUser.name;
+                document.getElementById('auth-role').value = state.currentUser.role;
+            } else {
+                document.getElementById('auth-email').value = '';
+                document.getElementById('auth-name').value = '';
+                document.getElementById('auth-role').value = 'user';
+            }
 
             const modal = document.getElementById('auth-modal');
             modal.classList.remove('hidden');
@@ -508,9 +550,19 @@
 
         function handleAuthSubmit(e) {
             e.preventDefault();
-            state.currentUser.email = document.getElementById('auth-email').value;
-            state.currentUser.name = document.getElementById('auth-name').value;
-            state.currentUser.role = document.getElementById('auth-role').value;
+            const email = document.getElementById('auth-email').value;
+            const name = document.getElementById('auth-name').value;
+            const role = document.getElementById('auth-role').value;
+
+            state.currentUser = {
+                email,
+                name,
+                role,
+                masterCode: state.currentUser?.masterCode || String(Math.floor(1000 + Math.random() * 9000)),
+                boundMasterCode: state.currentUser?.boundMasterCode || '',
+                monitorPermission: true
+            };
+
             saveState();
             closeAuthModal();
             renderApp();
@@ -572,7 +624,7 @@
         }
 
         function checkTimeEscalation() {
-            if (state.currentUser.role !== 'master' || state.alertDismissed) return;
+            if (!state.currentUser || state.currentUser.role !== 'master' || state.alertDismissed) return;
 
             const now = new Date();
             const hours = now.getHours();
@@ -607,6 +659,20 @@
         }
 
         function renderApp() {
+            const landingView = document.getElementById('landing-view');
+            const appDashboard = document.getElementById('app-dashboard');
+
+            if (!state.currentUser) {
+                landingView.classList.remove('hidden');
+                appDashboard.classList.add('hidden');
+                document.getElementById('nav-auth-btn-text').innerText = 'Sign In / Register';
+                refreshIcons();
+                return;
+            }
+
+            landingView.classList.add('hidden');
+            appDashboard.classList.remove('hidden');
+
             document.getElementById('nav-auth-btn-text').innerText = state.currentUser.name;
             document.getElementById('role-text-badge').innerText = `${state.currentUser.role.toUpperCase()} PROFILE`;
             document.getElementById('hero-greeting').innerText = `Welcome, ${state.currentUser.name}`;
