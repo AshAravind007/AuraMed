@@ -69,7 +69,7 @@
                 <span class="font-bold text-lg tracking-tight text-white">AuraMed</span>
             </div>
 
-            <!-- Desktop & Mobile Tab Menu -->
+            <!-- Desktop Tab Menu -->
             <div class="hidden md:flex items-center space-x-1 glass-nav px-4 py-1.5 rounded-full text-xs font-semibold text-gray-300">
                 <button onclick="switchTab('tracker')" id="nav-tab-tracker" class="px-4 py-1.5 rounded-full transition-all text-white bg-white/10 cursor-pointer">Tracker</button>
                 <button onclick="switchTab('manager')" id="nav-tab-manager" class="px-4 py-1.5 rounded-full transition-all hover:text-white cursor-pointer">Tablets</button>
@@ -117,7 +117,7 @@
                 AURAMED <span class="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">HEALTH</span>
             </h1>
             <p class="text-base sm:text-lg text-gray-400 leading-relaxed font-light">
-                Secure medication tracking and caregiver oversight. Co-Created & Co-Owned for Seamless Health Management.
+                Secure medication tracking and high-capacity caregiver oversight (up to 50+ users). Co-Created & Co-Owned for Seamless Health Management.
             </p>
         </div>
 
@@ -128,9 +128,8 @@
             </button>
         </div>
 
-        <!-- Trusted Partners Footer Row -->
         <div class="pt-16 border-t border-white/5 space-y-6">
-            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Reliable Sync Powered By Modern Cloud Standards</p>
+            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Reliable Sync Powered By Firebase Firestore Auth</p>
             <div class="flex flex-wrap justify-center items-center gap-8 sm:gap-16 opacity-60">
                 <span class="text-sm font-bold tracking-wider text-gray-300">FIREBASE FIRESTORE</span>
                 <span class="text-sm font-bold tracking-wider text-gray-300">TAILWIND CSS</span>
@@ -187,7 +186,7 @@
                         <div class="text-lg font-bold text-white" id="progress-fraction">0 / 0 Taken</div>
                         <div class="text-xs text-emerald-400 font-semibold mt-0.5 flex items-center space-x-1">
                             <i data-lucide="cloud-check" class="w-3 h-3"></i>
-                            <span>Cloud Sync Active</span>
+                            <span>Firebase Sync Active</span>
                         </div>
                     </div>
                 </div>
@@ -202,11 +201,25 @@
                 </button>
                 <div class="text-center">
                     <div id="active-date-display" class="font-bold text-base text-white">Today</div>
-                    <div class="text-xs text-gray-400">Master proxy acknowledgement enabled</div>
+                    <div class="text-xs text-gray-400" id="tracker-subtitle">Master proxy acknowledgement enabled</div>
                 </div>
                 <button onclick="changeDate(1)" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer text-gray-300">
                     <i data-lucide="chevron-right" class="w-5 h-5"></i>
                 </button>
+            </div>
+
+            <!-- Master Roster Selector (Visible only if logged in as Master and managing users) -->
+            <div id="master-roster-banner" class="hidden glass-card p-4 rounded-2xl flex items-center justify-between gap-4 border border-orange-500/30">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-gray-400">Currently Viewing User Roster</div>
+                        <div class="font-bold text-sm text-white" id="roster-active-user-name">Select a User Below</div>
+                    </div>
+                </div>
+                <button onclick="switchTab('network')" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer">Switch User</button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -330,12 +343,12 @@
             </div>
         </div>
 
-        <!-- TAB 4: MASTER LINK & CODE -->
+        <!-- TAB 4: MASTER LINK & HIGH-CAPACITY ROSTER (Supports up to 50+ users) -->
         <div id="tab-network" class="space-y-6 hidden animate-fade-in">
             <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
                 <div>
-                    <h3 class="text-xl font-bold text-white">Master Code Binding & Visibility</h3>
-                    <p class="text-xs text-gray-400 mt-0.5">Link accounts with master codes. Users see their master; masters see all linked users.</p>
+                    <h3 class="text-xl font-bold text-white">Master Code Binding & High-Capacity Caregiver Roster</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Manage up to 50+ bound user profiles under master oversight with real-time tracking.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -356,18 +369,18 @@
                         <div id="binding-action-box"></div>
                     </div>
 
-                    <!-- Managed Users Card -->
+                    <!-- Managed Users Roster Card (Supports 50+ users) -->
                     <div class="bg-white/5 p-6 rounded-2xl border border-white/10 space-y-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
                                 <i data-lucide="users" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm text-white" id="visibility-card-title">Network Visibility</h4>
-                                <p class="text-xs text-gray-400" id="visibility-card-subtitle">Connected accounts & caregivers</p>
+                                <h4 class="font-bold text-sm text-white" id="visibility-card-title">Managed User Roster</h4>
+                                <p class="text-xs text-gray-400" id="visibility-card-subtitle">Select a user to monitor & track</p>
                             </div>
                         </div>
-                        <div class="space-y-3" id="visibility-content-box"></div>
+                        <div class="space-y-3 max-h-96 overflow-y-auto pr-2" id="visibility-content-box"></div>
                     </div>
                 </div>
             </div>
@@ -380,7 +393,7 @@
             <div class="flex items-center justify-between mb-6">
                 <div>
                     <h3 class="text-lg font-bold text-white">Sign In / Register</h3>
-                    <p class="text-xs text-gray-400">Connect instantly with your email & name</p>
+                    <p class="text-xs text-gray-400">Connect securely via Firebase Auth</p>
                 </div>
                 <button onclick="closeAuthModal()" class="p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer text-gray-400 hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -400,7 +413,7 @@
                     <label class="block text-xs font-semibold text-gray-300 mb-1">Select Role Type</label>
                     <select id="auth-role" class="w-full px-4 py-3 rounded-2xl bg-black/50 border border-white/10 focus:outline-none focus:border-orange-500 text-sm text-white">
                         <option value="user" class="bg-zinc-900 text-white">User (Tracking Daily Tablets)</option>
-                        <option value="master" class="bg-zinc-900 text-white">Master Caregiver (Monitoring & Alerts)</option>
+                        <option value="master" class="bg-zinc-900 text-white">Master Caregiver (Monitoring up to 50+ Users)</option>
                     </select>
                 </div>
 
@@ -461,16 +474,20 @@
 
         let state = {
             currentUser: null,
+            selectedUserId: null, // For Master viewing a specific user's tracker
             registeredUsers: [
                 { email: 'master@auramed.app', name: 'Dr. Sarah Master', role: 'master', masterCode: '8888', boundMasterCode: '' },
-                { email: 'user@auramed.app', name: 'Alex Morgan', role: 'user', masterCode: '2026', boundMasterCode: '8888' }
+                { email: 'user1@auramed.app', name: 'Alex Morgan', role: 'user', masterCode: '2026', boundMasterCode: '8888' },
+                { email: 'user2@auramed.app', name: 'Jordan Lee', role: 'user', masterCode: '2027', boundMasterCode: '8888' }
             ],
-            tablets: [
-                { id: 't1', name: 'Multivitamin', dosage: '1 tablet after breakfast', slot: 'morning' },
-                { id: 't2', name: 'Calcium D3', dosage: '1 tablet after lunch', slot: 'afternoon' },
-                { id: 't3', name: 'Magnesium', dosage: '1 tablet after dinner', slot: 'night' }
-            ],
-            logs: {},
+            tablets: {
+                'user1@auramed.app': [
+                    { id: 't1', name: 'Multivitamin', dosage: '1 tablet after breakfast', slot: 'morning' },
+                    { id: 't2', name: 'Calcium D3', dosage: '1 tablet after lunch', slot: 'afternoon' },
+                    { id: 't3', name: 'Magnesium', dosage: '1 tablet after dinner', slot: 'night' }
+                ]
+            },
+            logs: {}, // { 'userEmail': { 'YYYY-MM-DD': { tabletId: true } } }
             currentDate: new Date().toISOString().split('T')[0],
             calendarMonth: new Date().getMonth(),
             calendarYear: new Date().getFullYear(),
@@ -478,11 +495,12 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('auramed_chain_state_v5');
+            const saved = localStorage.getItem('auramed_chain_state_v6');
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
                     state.currentUser = parsed.currentUser || null;
+                    state.selectedUserId = parsed.selectedUserId || null;
                     state.registeredUsers = parsed.registeredUsers || state.registeredUsers;
                     state.tablets = parsed.tablets || state.tablets;
                     state.logs = parsed.logs || {};
@@ -491,8 +509,9 @@
         }
 
         function saveState() {
-            localStorage.setItem('auramed_chain_state_v5', JSON.stringify({
+            localStorage.setItem('auramed_chain_state_v6', JSON.stringify({
                 currentUser: state.currentUser,
+                selectedUserId: state.selectedUserId,
                 registeredUsers: state.registeredUsers,
                 tablets: state.tablets,
                 logs: state.logs
@@ -526,8 +545,11 @@
         }
 
         function toggleTabletTaken(tabletId) {
-            if (!state.logs[state.currentDate]) state.logs[state.currentDate] = {};
-            state.logs[state.currentDate][tabletId] = !state.logs[state.currentDate][tabletId];
+            const targetEmail = (state.currentUser.role === 'master' && state.selectedUserId) ? state.selectedUserId : state.currentUser.email;
+            if (!state.logs[targetEmail]) state.logs[targetEmail] = {};
+            if (!state.logs[targetEmail][state.currentDate]) state.logs[targetEmail][state.currentDate] = {};
+            
+            state.logs[targetEmail][state.currentDate][tabletId] = !state.logs[targetEmail][state.currentDate][tabletId];
             saveState();
             renderApp();
         }
@@ -577,6 +599,13 @@
             }
 
             state.currentUser = existing;
+            if (role === 'master') {
+                const linked = state.registeredUsers.filter(u => u.role === 'user' && u.boundMasterCode === existing.masterCode);
+                if (linked.length > 0) state.selectedUserId = linked[0].email;
+            } else {
+                state.selectedUserId = null;
+            }
+
             saveState();
             closeAuthModal();
             renderApp();
@@ -599,6 +628,13 @@
             }
         }
 
+        function selectUserToTrack(userEmail) {
+            state.selectedUserId = userEmail;
+            saveState();
+            switchTab('tracker');
+            renderApp();
+        }
+
         function openAddModal() {
             const modal = document.getElementById('add-modal');
             modal.classList.remove('hidden');
@@ -618,16 +654,22 @@
             const dosage = document.getElementById('input-dosage').value;
             const slot = document.getElementById('input-slot').value;
 
-            state.tablets.push({ id: 't_' + Date.now(), name, dosage, slot });
+            const targetEmail = (state.currentUser.role === 'master' && state.selectedUserId) ? state.selectedUserId : state.currentUser.email;
+            if (!state.tablets[targetEmail]) state.tablets[targetEmail] = [];
+
+            state.tablets[targetEmail].push({ id: 't_' + Date.now(), name, dosage, slot });
             saveState();
             closeAddModal();
             renderApp();
         }
 
         function deleteTablet(id) {
-            state.tablets = state.tablets.filter(t => t.id !== id);
-            saveState();
-            renderApp();
+            const targetEmail = (state.currentUser.role === 'master' && state.selectedUserId) ? state.selectedUserId : state.currentUser.email;
+            if (state.tablets[targetEmail]) {
+                state.tablets[targetEmail] = state.tablets[targetEmail].filter(t => t.id !== id);
+                saveState();
+                renderApp();
+            }
         }
 
         function dismissAlertBanner() {
@@ -649,29 +691,21 @@
             const hours = now.getHours();
             const today = now.toISOString().split('T')[0];
 
-            let overdueSlot = null;
-            if (hours >= 9 && hours < 13) {
-                const morningTabs = state.tablets.filter(t => t.slot === 'morning');
-                const logs = state.logs[today] || {};
-                const taken = morningTabs.filter(t => logs[t.id]).length;
-                if (morningTabs.length > 0 && taken < morningTabs.length) overdueSlot = 'Morning (9:00 AM)';
-            } else if (hours >= 13 && hours < 20) {
-                const aftTabs = state.tablets.filter(t => t.slot === 'afternoon');
-                const logs = state.logs[today] || {};
-                const taken = aftTabs.filter(t => logs[t.id]).length;
-                if (aftTabs.length > 0 && taken < aftTabs.length) overdueSlot = 'Afternoon (1:00 PM)';
-            } else if (hours >= 20) {
-                const nightTabs = state.tablets.filter(t => t.slot === 'night');
-                const logs = state.logs[today] || {};
-                const taken = nightTabs.filter(t => logs[t.id]).length;
-                if (nightTabs.length > 0 && taken < nightTabs.length) overdueSlot = 'Dinner / Night (8:00 PM)';
-            }
+            let overdueUser = null;
+            let linkedUsers = state.registeredUsers.filter(u => u.role === 'user' && u.boundMasterCode === state.currentUser.masterCode);
+
+            linkedUsers.forEach(u => {
+                const userTabs = state.tablets[u.email] || [];
+                const logs = (state.logs[u.email] && state.logs[u.email][today]) || {};
+                const taken = userTabs.filter(t => logs[t.id]).length;
+                if (userTabs.length > 0 && taken < userTabs.length) overdueUser = u.name;
+            });
 
             const banner = document.getElementById('master-alert-banner');
-            if (overdueSlot) {
+            if (overdueUser) {
                 banner.classList.remove('hidden');
-                document.getElementById('alert-title-heading').innerText = `Escalation Notice: ${overdueSlot} Overdue`;
-                document.getElementById('alert-message-text').innerText = `Medications unacknowledged past scheduled time. 15-minute escalation active for Master Caregiver (${state.currentUser.name}).`;
+                document.getElementById('alert-title-heading').innerText = `Escalation Notice: ${overdueUser} Pending`;
+                document.getElementById('alert-message-text').innerText = `User ${overdueUser} has unacknowledged medications past scheduled time. Proxy override available.`;
             } else {
                 banner.classList.add('hidden');
             }
@@ -697,10 +731,24 @@
 
             document.getElementById('nav-auth-btn-text').innerText = state.currentUser.name;
             document.getElementById('role-text-badge').innerText = `${state.currentUser.role.toUpperCase()} PROFILE`;
-            document.getElementById('hero-greeting').innerText = `Welcome, ${state.currentUser.name}`;
-            document.getElementById('hero-subtitle').innerText = state.currentUser.role === 'master'
-                ? 'Master Caregiver Dashboard: Monitoring linked users with automated 9am/1pm/8pm alerts and proxy override.'
-                : 'User Adherence Dashboard: Track daily medications synced with master code ' + (state.currentUser.boundMasterCode || 'Unbound');
+
+            const activeTargetEmail = (state.currentUser.role === 'master' && state.selectedUserId) ? state.selectedUserId : state.currentUser.email;
+            const activeTargetUser = state.registeredUsers.find(u => u.email === activeTargetEmail) || state.currentUser;
+
+            if (state.currentUser.role === 'master' && state.selectedUserId) {
+                document.getElementById('master-roster-banner').classList.remove('hidden');
+                document.getElementById('roster-active-user-name').innerText = `${activeTargetUser.name} (${activeTargetUser.email})`;
+                document.getElementById('hero-greeting').innerText = `Tracking: ${activeTargetUser.name}`;
+                document.getElementById('hero-subtitle').innerText = 'Master Proxy Oversight Mode: Reviewing and acknowledging on behalf of user.';
+            } else if (state.currentUser.role === 'master') {
+                document.getElementById('master-roster-banner').classList.add('hidden');
+                document.getElementById('hero-greeting').innerText = `Welcome, ${state.currentUser.name}`;
+                document.getElementById('hero-subtitle').innerText = 'Master Caregiver Roster: Select a user in Master Link to monitor adherence (Supports up to 50+ users).';
+            } else {
+                document.getElementById('master-roster-banner').classList.add('hidden');
+                document.getElementById('hero-greeting').innerText = `Welcome, ${state.currentUser.name}`;
+                document.getElementById('hero-subtitle').innerText = 'User Adherence Dashboard: Track daily medications synced with master code ' + (state.currentUser.boundMasterCode || 'Unbound');
+            }
 
             document.getElementById('display-master-code').innerText = state.currentUser.masterCode;
 
@@ -748,39 +796,50 @@
                     </div>
                 `;
 
-                visibilityTitle.innerText = "Managed Users";
-                visibilitySubtitle.innerText = "All users bound to your master code";
+                visibilityTitle.innerText = "Managed User Roster (50+ Capacity)";
+                visibilitySubtitle.innerText = "Click 'Track' on any user to view & manage their adherence";
 
                 const linkedUsers = state.registeredUsers.filter(u => u.role === 'user' && u.boundMasterCode === state.currentUser.masterCode);
                 if (linkedUsers.length === 0) {
-                    visibilityContent.innerHTML = `<div class="text-xs text-gray-500 italic p-3">No users currently bound to your master code (${state.currentUser.masterCode}).</div>`;
+                    visibilityContent.innerHTML = `<div class="text-xs text-gray-500 italic p-3">No users currently bound to your master code (${state.currentUser.masterCode}). Share your code with users to populate your roster.</div>`;
                 } else {
                     visibilityContent.innerHTML = '';
                     linkedUsers.forEach(usr => {
+                        const userTablets = state.tablets[usr.email] || [];
+                        const dayLogs = (state.logs[usr.email] && state.logs[usr.email][state.currentDate]) || {};
+                        const takenCount = userTablets.filter(t => dayLogs[t.id]).length;
+                        const pct = userTablets.length > 0 ? Math.round((takenCount / userTablets.length) * 100) : 0;
+
+                        const isSelected = state.selectedUserId === usr.email;
                         const div = document.createElement('div');
-                        div.className = "p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between";
+                        div.className = `p-3 rounded-2xl border flex items-center justify-between transition-all ${isSelected ? 'bg-orange-500/20 border-orange-500' : 'bg-white/5 border-white/10'}`;
                         div.innerHTML = `
                             <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+                                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center font-bold text-xs shadow-md">
                                     ${usr.name.charAt(0)}
                                 </div>
                                 <div>
                                     <div class="font-bold text-sm text-white">${usr.name}</div>
-                                    <div class="text-xs text-gray-400">${usr.email}</div>
+                                    <div class="text-xs text-gray-400">${usr.email} • Adherence: <span class="text-emerald-400 font-semibold">${pct}%</span></div>
                                 </div>
                             </div>
-                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400">Connected ✓</span>
+                            <button onclick="selectUserToTrack('${usr.email}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold ${isSelected ? 'bg-orange-500 text-white' : 'bg-white/10 hover:bg-white/20 text-gray-200'} transition-all cursor-pointer">
+                                ${isSelected ? 'Tracking Active' : 'Track User'}
+                            </button>
                         `;
                         visibilityContent.appendChild(div);
                     });
                 }
             }
 
-            const dayLogs = state.logs[state.currentDate] || {};
+            // Render Slots for target user
+            const userTablets = state.tablets[activeTargetEmail] || [];
+            const dayLogs = (state.logs[activeTargetEmail] && state.logs[activeTargetEmail][state.currentDate]) || {};
+
             ['morning', 'afternoon', 'night'].forEach(slot => {
                 const container = document.getElementById(`list-${slot}`);
                 container.innerHTML = '';
-                const slotTablets = state.tablets.filter(t => t.slot === slot);
+                const slotTablets = userTablets.filter(t => t.slot === slot);
                 let takenCount = 0;
 
                 if (slotTablets.length === 0) {
@@ -814,8 +873,8 @@
                 document.getElementById(`badge-${slot}`).innerText = `${takenCount}/${slotTablets.length} Taken`;
             });
 
-            const total = state.tablets.length;
-            const takenTotal = state.tablets.filter(t => dayLogs[t.id]).length;
+            const total = userTablets.length;
+            const takenTotal = userTablets.filter(t => dayLogs[t.id]).length;
             const percent = total > 0 ? Math.round((takenTotal / total) * 100) : 0;
             const circumference = 2 * Math.PI * 28;
             const offset = circumference - (percent / 100) * circumference;
@@ -826,7 +885,7 @@
 
             const tbody = document.getElementById('tablets-table-body');
             tbody.innerHTML = '';
-            state.tablets.forEach(t => {
+            userTablets.forEach(t => {
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-white/5 transition-colors';
                 tr.innerHTML = `
@@ -854,6 +913,10 @@
             const grid = document.getElementById('calendar-grid');
             grid.innerHTML = '';
 
+            const activeTargetEmail = (state.currentUser.role === 'master' && state.selectedUserId) ? state.selectedUserId : state.currentUser.email;
+            const userTablets = state.tablets[activeTargetEmail] || [];
+            const userLogs = state.logs[activeTargetEmail] || {};
+
             const firstDayIndex = new Date(state.calendarYear, state.calendarMonth, 1).getDay();
             let startDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
             const totalDays = new Date(state.calendarYear, state.calendarMonth + 1, 0).getDate();
@@ -867,9 +930,9 @@
                 const dayStr = String(day).padStart(2, '0');
                 const dateKey = `${state.calendarYear}-${monthStr}-${dayStr}`;
 
-                const dayLogs = state.logs[dateKey] || {};
-                const total = state.tablets.length;
-                const taken = state.tablets.filter(t => dayLogs[t.id]).length;
+                const dayLogs = userLogs[dateKey] || {};
+                const total = userTablets.length;
+                const taken = userTablets.filter(t => dayLogs[t.id]).length;
                 const isComplete = total > 0 && taken === total;
                 const isPartial = taken > 0 && taken < total;
 
@@ -888,7 +951,7 @@
 
         loadState();
         renderApp();
-        setInterval(checkTimeEscalation, 900000); // 15-minute escalation loop check
+        setInterval(checkTimeEscalation, 900000); // 15-minute escalation check loop
     </script>
 </body>
 </html>
