@@ -3,262 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraMed — Public Health Adherence & Caregiver Network</title>
+    <title>AuraMed — Intelligent Adherence & Care Network</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.9);
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: #FFFFFF; }
+        .ambient-glow-top-left {
+            position: fixed; top: -100px; left: -100px; width: 450px; height: 450px;
+            background: radial-gradient(circle, rgba(255, 94, 0, 0.22) 0%, rgba(255, 94, 0, 0) 70%);
+            z-index: 0; pointer-events: none;
+        }
+        .ambient-glow-bottom-right {
+            position: fixed; bottom: -100px; right: -100px; width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(255, 69, 0, 0.25) 0%, rgba(255, 69, 0, 0) 70%);
+            z-index: 0; pointer-events: none;
+        }
+        .glass-nav {
+            background: rgba(12, 12, 15, 0.75);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
-        .dark .glass-panel {
-            background: rgba(22, 22, 28, 0.85);
+        .glass-card {
+            background: rgba(18, 18, 22, 0.75);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
-        .apple-shadow {
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+        .btn-gradient {
+            background: linear-gradient(135deg, #FF5E00 0%, #FF2A00 100%);
+            transition: all 0.3s ease;
         }
-        .dark .apple-shadow {
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        .btn-gradient:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(255, 94, 0, 0.4);
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .animate-fade-in {
-            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
 </head>
-<body class="bg-[#F5F5F7] dark:bg-[#0B0B0E] text-[#1D1D1F] dark:text-[#F5F5F7] min-h-screen selection:bg-indigo-500 selection:text-white transition-colors duration-500">
+<body class="min-h-screen selection:bg-orange-500 selection:text-white relative overflow-x-hidden">
 
-    <!-- Top Navigation Bar -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-gray-200/60 dark:border-white/10 px-6 py-4">
-        <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <!-- Ambient Background Lighting -->
+    <div class="ambient-glow-top-left"></div>
+    <div class="ambient-glow-bottom-right"></div>
+
+    <!-- Floating Pill Navigation Bar -->
+    <header class="sticky top-6 z-50 max-w-6xl mx-auto px-4">
+        <div class="glass-nav rounded-full px-6 py-3.5 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
-                    <i data-lucide="activity" class="w-5 h-5"></i>
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-orange-500/30 font-extrabold text-sm">
+                    AM
                 </div>
-                <div>
-                    <h1 class="font-bold text-lg tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">AuraMed</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Public Adherence & Care Network</p>
-                </div>
+                <span class="font-bold text-lg tracking-tight text-white">AuraMed</span>
+            </div>
+
+            <!-- Center Nav Links -->
+            <div class="hidden md:flex items-center space-x-1 glass-nav px-4 py-1.5 rounded-full text-xs font-semibold text-gray-300">
+                <button onclick="switchTab('tracker')" id="nav-tab-tracker" class="px-4 py-1.5 rounded-full transition-all text-white bg-white/10">Tracker</button>
+                <button onclick="switchTab('manager')" id="nav-tab-manager" class="px-4 py-1.5 rounded-full transition-all hover:text-white">Tablets</button>
+                <button onclick="switchTab('calendar')" id="nav-tab-calendar" class="px-4 py-1.5 rounded-full transition-all hover:text-white">Calendar</button>
+                <button onclick="switchTab('network')" id="nav-tab-network" class="px-4 py-1.5 rounded-full transition-all hover:text-white">Master Link</button>
             </div>
 
             <div class="flex items-center space-x-3">
-                <button onclick="openAuthModal()" class="flex items-center space-x-2 text-xs font-semibold px-4 py-2.5 rounded-2xl bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-md shadow-indigo-500/20 cursor-pointer">
-                    <i data-lucide="user-circle" class="w-4 h-4"></i>
-                    <span id="nav-auth-btn-text">Sign In / Register</span>
-                </button>
-
-                <button onclick="toggleDarkMode()" class="p-2.5 rounded-full bg-gray-200/80 dark:bg-white/10 border border-gray-300/60 dark:border-white/10 hover:bg-gray-300 dark:hover:bg-white/20 transition-all text-gray-800 dark:text-gray-200 cursor-pointer" title="Toggle Theme">
-                    <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
-                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+                <button onclick="openAuthModal()" class="btn-gradient text-white text-xs font-bold px-5 py-2.5 rounded-full flex items-center space-x-2 cursor-pointer">
+                    <span id="nav-auth-btn-text">Sign In</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- LANDING / WELCOME VIEW -->
-    <div id="landing-view" class="max-w-4xl mx-auto px-4 py-16 text-center space-y-8 animate-fade-in">
-        <div class="space-y-4">
-            <span class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20">
+    <!-- LANDING / WELCOME HERO VIEW -->
+    <div id="landing-view" class="max-w-5xl mx-auto px-4 pt-16 pb-24 text-center space-y-10 relative z-10 animate-fade-in">
+        <div class="space-y-6 max-w-3xl mx-auto">
+            <span class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-orange-500/10 text-orange-400 border border-orange-500/20">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                <span>Next-Generation Healthcare Adherence</span>
+                <span>Next-Generation Healthcare & Caregiver Intelligence</span>
             </span>
-            <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight">Never miss a dose. Stay connected with care.</h2>
-            <p class="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                AuraMed empowers users to track daily morning, afternoon, and night prescriptions with built-in calendar tracking, automatic 9 AM, 1 PM, and 8 PM master caregiver escalation alerts, and proxy overrides.
+            <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight text-white leading-none">
+                AURAMED <span class="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">HEALTH</span>
+            </h1>
+            <p class="text-base sm:text-lg text-gray-400 leading-relaxed font-light">
+                Collaborative Intelligence of Medication Adherence and Caregiver Oversight. Co-Created & Co-Owned for Seamless Health Management.
             </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left pt-4">
-            <div class="glass-panel p-6 rounded-3xl apple-shadow space-y-3">
-                <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
-                    <i data-lucide="check-square" class="w-5 h-5"></i>
-                </div>
-                <h3 class="font-bold text-base">Smart Schedule</h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Easily organize pills across morning, afternoon, and night slots with one-tap acknowledgement.</p>
-            </div>
-
-            <div class="glass-panel p-6 rounded-3xl apple-shadow space-y-3">
-                <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center">
-                    <i data-lucide="bell-ring" class="w-5 h-5"></i>
-                </div>
-                <h3 class="font-bold text-base">Caregiver Network</h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Master users monitor multiple linked users with automated escalation checks and proxy sign-off.</p>
-            </div>
-
-            <div class="glass-panel p-6 rounded-3xl apple-shadow space-y-3">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                    <i data-lucide="cloud" class="w-5 h-5"></i>
-                </div>
-                <h3 class="font-bold text-base">Firebase Cloud Sync</h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Secure user accounts and database persistence bound by unique 4-digit master codes.</p>
-            </div>
+        <div>
+            <button onclick="openAuthModal()" class="btn-gradient text-white text-sm font-bold px-8 py-4 rounded-full inline-flex items-center space-x-3 shadow-2xl shadow-orange-500/40 cursor-pointer">
+                <span>Launch Adherence Platform</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
         </div>
 
-        <div class="pt-6">
-            <button onclick="openAuthModal()" class="px-8 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base shadow-xl shadow-indigo-600/30 transition-all cursor-pointer inline-flex items-center space-x-2">
-                <span>Get Started Now</span>
-                <i data-lucide="arrow-right" class="w-5 h-5"></i>
-            </button>
+        <!-- Trusted Partners Footer Row -->
+        <div class="pt-16 border-t border-white/5 space-y-6">
+            <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold">Reliable Sync Powered By Modern Cloud Standards</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 sm:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all">
+                <span class="text-sm font-bold tracking-wider text-gray-300">FIREBASE</span>
+                <span class="text-sm font-bold tracking-wider text-gray-300">TAILWIND CSS</span>
+                <span class="text-sm font-bold tracking-wider text-gray-300">GITHUB PAGES</span>
+                <span class="text-sm font-bold tracking-wider text-gray-300">CLOUD SYNC</span>
+            </div>
         </div>
     </div>
 
     <!-- MAIN APP DASHBOARD -->
-    <main id="app-dashboard" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8 hidden animate-fade-in">
+    <main id="app-dashboard" class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8 relative z-10 hidden animate-fade-in">
 
-        <!-- Escalation Alert Banner for Master Users -->
-        <div id="master-alert-banner" class="hidden glass-panel border-l-4 border-l-rose-500 rounded-2xl p-4 sm:p-5 flex items-start justify-between gap-4 apple-shadow animate-fade-in">
+        <!-- Escalation Alert Banner -->
+        <div id="master-alert-banner" class="hidden glass-card border-l-4 border-l-orange-500 rounded-3xl p-5 flex items-start justify-between gap-4 animate-fade-in">
             <div class="flex items-start space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0 mt-0.5 animate-pulse">
+                <div class="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0 mt-0.5 animate-pulse">
                     <i data-lucide="bell-ring" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h4 class="font-bold text-sm text-rose-600 dark:text-rose-400" id="alert-title-heading">Adherence Escalation Notice</h4>
-                    <p class="text-xs text-gray-700 dark:text-gray-300 mt-0.5" id="alert-message-text">Linked user has pending medications past scheduled time. Master proxy override available.</p>
+                    <h4 class="font-bold text-sm text-orange-400" id="alert-title-heading">Adherence Escalation Notice</h4>
+                    <p class="text-xs text-gray-300 mt-0.5" id="alert-message-text">Medications unacknowledged past scheduled time. 15-minute escalation active.</p>
                 </div>
             </div>
             <div class="flex items-center space-x-2 shrink-0">
-                <button onclick="switchTab('tracker')" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-colors cursor-pointer">Proxy Acknowledge</button>
-                <button onclick="dismissAlertBanner()" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 transition-colors cursor-pointer">Snooze 15m</button>
+                <button onclick="switchTab('tracker')" class="text-xs font-semibold px-3 py-1.5 rounded-xl btn-gradient text-white transition-colors cursor-pointer">Proxy Acknowledge</button>
+                <button onclick="dismissAlertBanner()" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-gray-300 transition-colors cursor-pointer">Snooze 15m</button>
             </div>
         </div>
 
-        <!-- Hero Overview Card -->
-        <section class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow relative overflow-hidden">
-            <div class="absolute -right-16 -top-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- Hero Status Card -->
+        <section class="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden">
+            <div class="absolute -right-16 -top-16 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
-                    <span id="user-role-badge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-3 border border-indigo-200 dark:border-indigo-500/20">
+                    <span id="user-role-badge" class="inline-flex items-center space-x-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-orange-500/10 text-orange-400 mb-3 border border-orange-500/20">
                         <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
                         <span id="role-text-badge">User Profile</span>
                     </span>
-                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight" id="hero-greeting">Welcome</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1" id="hero-subtitle">Secure cloud medication tracking.</p>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white" id="hero-greeting">Welcome</h2>
+                    <p class="text-sm text-gray-400 mt-1" id="hero-subtitle">Secure cloud medication tracking active.</p>
                 </div>
 
-                <!-- Progress Ring / Stats -->
-                <div class="flex items-center space-x-4 bg-white/90 dark:bg-white/5 p-4 rounded-2xl border border-gray-200/80 dark:border-white/10">
+                <!-- Progress Ring -->
+                <div class="flex items-center space-x-4 bg-white/5 p-4 rounded-2xl border border-white/10">
                     <div class="relative flex items-center justify-center">
                         <svg class="w-16 h-16 transform -rotate-90">
-                            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="5" class="text-gray-200 dark:text-gray-800" fill="transparent"></circle>
-                            <circle id="progress-ring" cx="32" cy="32" r="28" stroke="currentColor" stroke-width="5" class="text-indigo-600 dark:text-indigo-400 transition-all duration-700" stroke-dasharray="175.93" stroke-dashoffset="175.93" stroke-linecap="round" fill="transparent"></circle>
+                            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="5" class="text-gray-800" fill="transparent"></circle>
+                            <circle id="progress-ring" cx="32" cy="32" r="28" stroke="currentColor" stroke-width="5" class="text-orange-500 transition-all duration-700" stroke-dasharray="175.93" stroke-dashoffset="175.93" stroke-linecap="round" fill="transparent"></circle>
                         </svg>
-                        <div class="absolute inset-0 flex items-center justify-center text-xs font-bold" id="progress-text">0%</div>
+                        <div class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white" id="progress-text">0%</div>
                     </div>
                     <div>
-                        <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Adherence Score</div>
-                        <div class="text-lg font-bold" id="progress-fraction">0 / 0 Taken</div>
-                        <div class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-0.5 flex items-center space-x-1">
+                        <div class="text-xs text-gray-400 font-medium">Adherence Score</div>
+                        <div class="text-lg font-bold text-white" id="progress-fraction">0 / 0 Taken</div>
+                        <div class="text-xs text-emerald-400 font-semibold mt-0.5 flex items-center space-x-1">
                             <i data-lucide="cloud-check" class="w-3 h-3"></i>
-                            <span id="streak-text">Cloud Sync Ready</span>
+                            <span>Cloud Sync Active</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Navigation Tabs -->
-        <div class="flex space-x-2 border-b border-gray-200 dark:border-white/10 pb-4 overflow-x-auto">
-            <button onclick="switchTab('tracker')" id="tab-btn-tracker" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 cursor-pointer flex items-center space-x-2">
-                <i data-lucide="check-square" class="w-4 h-4"></i>
-                <span>Daily Tracker</span>
-            </button>
-            <button onclick="switchTab('manager')" id="tab-btn-manager" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/80 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
-                <i data-lucide="pills" class="w-4 h-4"></i>
-                <span>Manage Tablets</span>
-            </button>
-            <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/80 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
-                <i data-lucide="calendar-days" class="w-4 h-4"></i>
-                <span>History Calendar</span>
-            </button>
-            <button onclick="switchTab('network')" id="tab-btn-network" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/80 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
-                <i data-lucide="key-round" class="w-4 h-4"></i>
-                <span>Master Link & Code</span>
-            </button>
-        </div>
-
         <!-- TAB 1: DAILY TRACKER -->
         <div id="tab-tracker" class="space-y-6 animate-fade-in">
-            <div class="glass-panel p-4 rounded-2xl flex items-center justify-between">
-                <button onclick="changeDate(-1)" class="p-2 rounded-xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/10 transition-colors cursor-pointer">
+            <div class="glass-card p-4 rounded-2xl flex items-center justify-between">
+                <button onclick="changeDate(-1)" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer text-gray-300">
                     <i data-lucide="chevron-left" class="w-5 h-5"></i>
                 </button>
                 <div class="text-center">
-                    <div id="active-date-display" class="font-bold text-base">Today</div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400">Master proxy acknowledgement enabled</div>
+                    <div id="active-date-display" class="font-bold text-base text-white">Today</div>
+                    <div class="text-xs text-gray-400">Master proxy acknowledgement enabled</div>
                 </div>
-                <button onclick="changeDate(1)" class="p-2 rounded-xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                <button onclick="changeDate(1)" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer text-gray-300">
                     <i data-lucide="chevron-right" class="w-5 h-5"></i>
                 </button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Morning Slot -->
-                <div class="glass-panel rounded-3xl p-6 apple-shadow flex flex-col justify-between border-t-4 border-t-amber-500">
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between border-t-4 border-t-amber-500">
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex items-center space-x-2.5">
-                                <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                                <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
                                     <i data-lucide="sunrise" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-bold text-base">Morning</h3>
-                                    <p class="text-xs text-gray-500">Alerts after 9:00 AM</p>
+                                    <h3 class="font-bold text-base text-white">Morning</h3>
+                                    <p class="text-xs text-gray-400">Alerts after 9:00 AM</p>
                                 </div>
                             </div>
-                            <span id="badge-morning" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-200 dark:bg-white/5 text-gray-600 dark:text-gray-400">0/0 Taken</span>
+                            <span id="badge-morning" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/10 text-gray-300">0/0 Taken</span>
                         </div>
                         <div class="space-y-3 mt-4" id="list-morning"></div>
                     </div>
                 </div>
 
                 <!-- Afternoon Slot -->
-                <div class="glass-panel rounded-3xl p-6 apple-shadow flex flex-col justify-between border-t-4 border-t-blue-500">
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between border-t-4 border-t-orange-500">
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex items-center space-x-2.5">
-                                <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center">
+                                <div class="w-9 h-9 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center">
                                     <i data-lucide="sun" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-bold text-base">Afternoon</h3>
-                                    <p class="text-xs text-gray-500">Alerts after 1:00 PM</p>
+                                    <h3 class="font-bold text-base text-white">Afternoon</h3>
+                                    <p class="text-xs text-gray-400">Alerts after 1:00 PM</p>
                                 </div>
                             </div>
-                            <span id="badge-afternoon" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-200 dark:bg-white/5 text-gray-600 dark:text-gray-400">0/0 Taken</span>
+                            <span id="badge-afternoon" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/10 text-gray-300">0/0 Taken</span>
                         </div>
                         <div class="space-y-3 mt-4" id="list-afternoon"></div>
                     </div>
                 </div>
 
                 <!-- Night Slot -->
-                <div class="glass-panel rounded-3xl p-6 apple-shadow flex flex-col justify-between border-t-4 border-t-violet-500">
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between border-t-4 border-t-purple-500">
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex items-center space-x-2.5">
-                                <div class="w-9 h-9 rounded-xl bg-violet-500/10 text-violet-500 flex items-center justify-center">
+                                <div class="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
                                     <i data-lucide="moon" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-bold text-base">Night / Dinner</h3>
-                                    <p class="text-xs text-gray-500">Alerts after 8:00 PM</p>
+                                    <h3 class="font-bold text-base text-white">Night / Dinner</h3>
+                                    <p class="text-xs text-gray-400">Alerts after 8:00 PM</p>
                                 </div>
                             </div>
-                            <span id="badge-night" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-200 dark:bg-white/5 text-gray-600 dark:text-gray-400">0/0 Taken</span>
+                            <span id="badge-night" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/10 text-gray-300">0/0 Taken</span>
                         </div>
                         <div class="space-y-3 mt-4" id="list-night"></div>
                     </div>
@@ -268,13 +252,13 @@
 
         <!-- TAB 2: TABLET MANAGER -->
         <div id="tab-manager" class="space-y-6 hidden animate-fade-in">
-            <div class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow">
+            <div class="glass-card rounded-3xl p-6 sm:p-8">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
-                        <h3 class="text-xl font-bold">Tablet Inventory</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Manage medications and custom dosage instructions.</p>
+                        <h3 class="text-xl font-bold text-white">Tablet Inventory</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Manage prescriptions and custom dosage instructions.</p>
                     </div>
-                    <button onclick="openAddModal()" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all cursor-pointer flex items-center justify-center space-x-2">
+                    <button onclick="openAddModal()" class="px-5 py-2.5 rounded-2xl btn-gradient text-white font-semibold text-sm shadow-lg shadow-orange-500/30 transition-all cursor-pointer flex items-center justify-center space-x-2">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                         <span>Add New Tablet</span>
                     </button>
@@ -283,14 +267,14 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-gray-200 dark:border-white/10 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                            <tr class="border-b border-white/10 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                                 <th class="py-3 px-4">Tablet Name</th>
                                 <th class="py-3 px-4">Dosage / Instructions</th>
                                 <th class="py-3 px-4">Time Slot</th>
                                 <th class="py-3 px-4 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="tablets-table-body" class="divide-y divide-gray-200 dark:divide-white/5 text-sm"></tbody>
+                        <tbody id="tablets-table-body" class="divide-y divide-white/5 text-sm text-gray-200"></tbody>
                     </table>
                 </div>
             </div>
@@ -298,30 +282,30 @@
 
         <!-- TAB 3: CALENDAR -->
         <div id="tab-calendar" class="space-y-6 hidden animate-fade-in">
-            <div class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow">
+            <div class="glass-card rounded-3xl p-6 sm:p-8">
                 <div class="flex items-center justify-between mb-6">
                     <div>
-                        <h3 class="text-xl font-bold" id="cal-month-year">September 2026</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Monthly adherence history audit</p>
+                        <h3 class="text-xl font-bold text-white" id="cal-month-year">September 2026</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Monthly adherence history audit</p>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button onclick="changeCalendarMonth(-1)" class="p-2.5 rounded-xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/15 transition-colors cursor-pointer">
+                        <button onclick="changeCalendarMonth(-1)" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer text-gray-300">
                             <i data-lucide="chevron-left" class="w-4 h-4"></i>
                         </button>
-                        <button onclick="changeCalendarMonth(1)" class="p-2.5 rounded-xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/15 transition-colors cursor-pointer">
+                        <button onclick="changeCalendarMonth(1)" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer text-gray-300">
                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
                         </button>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-7 gap-2 text-center mb-3">
-                    <div class="text-xs font-bold text-gray-500">Mon</div>
-                    <div class="text-xs font-bold text-gray-500">Tue</div>
-                    <div class="text-xs font-bold text-gray-500">Wed</div>
-                    <div class="text-xs font-bold text-gray-500">Thu</div>
-                    <div class="text-xs font-bold text-gray-500">Fri</div>
-                    <div class="text-xs font-bold text-gray-500">Sat</div>
-                    <div class="text-xs font-bold text-gray-500">Sun</div>
+                    <div class="text-xs font-bold text-gray-400">Mon</div>
+                    <div class="text-xs font-bold text-gray-400">Tue</div>
+                    <div class="text-xs font-bold text-gray-400">Wed</div>
+                    <div class="text-xs font-bold text-gray-400">Thu</div>
+                    <div class="text-xs font-bold text-gray-400">Fri</div>
+                    <div class="text-xs font-bold text-gray-400">Sat</div>
+                    <div class="text-xs font-bold text-gray-400">Sun</div>
                 </div>
                 <div id="calendar-grid" class="grid grid-cols-7 gap-2"></div>
             </div>
@@ -329,120 +313,116 @@
 
         <!-- TAB 4: MASTER LINK & CODE -->
         <div id="tab-network" class="space-y-6 hidden animate-fade-in">
-            <div class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow space-y-6">
+            <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
                 <div>
-                    <h3 class="text-xl font-bold">Master Code Binding & Visibility</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Link accounts with master codes. Users see their master; masters see all linked users.</p>
+                    <h3 class="text-xl font-bold text-white">Master Code Binding & Visibility</h3>
+                    <p class="text-xs text-gray-400 mt-0.5">Link accounts with master codes. Users see their master; masters see all linked users.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Master Code / Binding Card -->
-                    <div class="bg-white/80 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
+                    <!-- Master Code Card -->
+                    <div class="bg-white/5 p-6 rounded-2xl border border-white/10 space-y-4">
                         <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
+                            <div class="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center">
                                 <i data-lucide="key" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm">Master Code Status</h4>
-                                <p class="text-xs text-gray-500">Unique secure 4-digit reference</p>
+                                <h4 class="font-bold text-sm text-white">Master Code Status</h4>
+                                <p class="text-xs text-gray-400">Unique secure 4-digit reference</p>
                             </div>
                         </div>
-                        <div class="text-3xl font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 py-3 px-4 rounded-xl text-center" id="display-master-code">
+                        <div class="text-3xl font-mono font-bold tracking-widest text-orange-400 bg-orange-500/10 py-3 px-4 rounded-xl text-center" id="display-master-code">
                             ----
                         </div>
-                        <div id="binding-action-box">
-                            <!-- Injected dynamically based on role -->
-                        </div>
+                        <div id="binding-action-box"></div>
                     </div>
 
-                    <!-- Visibility / Managed Users Card -->
-                    <div class="bg-white/80 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
+                    <!-- Managed Users Card -->
+                    <div class="bg-white/5 p-6 rounded-2xl border border-white/10 space-y-4">
                         <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-500 flex items-center justify-center">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center">
                                 <i data-lucide="users" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm" id="visibility-card-title">Network Visibility</h4>
-                                <p class="text-xs text-gray-500" id="visibility-card-subtitle">Connected accounts & caregivers</p>
+                                <h4 class="font-bold text-sm text-white" id="visibility-card-title">Network Visibility</h4>
+                                <p class="text-xs text-gray-400" id="visibility-card-subtitle">Connected accounts & caregivers</p>
                             </div>
                         </div>
-                        <div class="space-y-3" id="visibility-content-box">
-                            <!-- Injected dynamically -->
-                        </div>
+                        <div class="space-y-3" id="visibility-content-box"></div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Modal: Auth / Registration & Role Selection -->
-    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
-        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full apple-shadow transform scale-95 transition-transform duration-300">
+    <!-- Modal: Auth / Registration -->
+    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-md w-full transform scale-95 transition-transform duration-300">
             <div class="flex items-center justify-between mb-6">
                 <div>
-                    <h3 class="text-lg font-bold">Sign In / Register</h3>
-                    <p class="text-xs text-gray-500">Connect with your email and name</p>
+                    <h3 class="text-lg font-bold text-white">Sign In / Register</h3>
+                    <p class="text-xs text-gray-400">Connect with your email and name</p>
                 </div>
-                <button onclick="closeAuthModal()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                <button onclick="closeAuthModal()" class="p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer text-gray-400 hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
             <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
-                    <input type="email" id="auth-email" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Email Address</label>
+                    <input type="email" id="auth-email" required class="w-full px-4 py-3 rounded-2xl bg-black/50 border border-white/10 focus:outline-none focus:border-orange-500 text-sm text-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
-                    <input type="text" id="auth-name" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Full Name</label>
+                    <input type="text" id="auth-name" required class="w-full px-4 py-3 rounded-2xl bg-black/50 border border-white/10 focus:outline-none focus:border-orange-500 text-sm text-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Select Role Type</label>
-                    <select id="auth-role" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
-                        <option value="user">User (Tracking Daily Tablets)</option>
-                        <option value="master">Master Caregiver (Monitoring & Alerts)</option>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Select Role Type</label>
+                    <select id="auth-role" class="w-full px-4 py-3 rounded-2xl bg-black/50 border border-white/10 focus:outline-none focus:border-orange-500 text-sm text-white">
+                        <option value="user" class="bg-zinc-900 text-white">User (Tracking Daily Tablets)</option>
+                        <option value="master" class="bg-zinc-900 text-white">Master Caregiver (Monitoring & Alerts)</option>
                     </select>
                 </div>
 
                 <div class="pt-4 flex items-center justify-end space-x-3">
-                    <button type="button" onclick="closeAuthModal()" class="px-5 py-2.5 rounded-2xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 text-sm font-semibold transition-colors cursor-pointer">Cancel</button>
-                    <button type="submit" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer">Continue to Dashboard</button>
+                    <button type="button" onclick="closeAuthModal()" class="px-5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/15 text-sm font-semibold transition-colors cursor-pointer text-gray-300">Cancel</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-2xl btn-gradient text-white text-sm font-semibold shadow-lg shadow-orange-500/30 transition-all cursor-pointer">Continue to Dashboard</button>
                 </div>
             </form>
         </div>
     </div>
 
     <!-- Modal: Add Tablet -->
-    <div id="add-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
-        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full apple-shadow transform scale-95 transition-transform duration-300" id="add-modal-content">
+    <div id="add-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-md w-full transform scale-95 transition-transform duration-300" id="add-modal-content">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-lg font-bold">Add Prescription Tablet</h3>
-                <button onclick="closeAddModal()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                <h3 class="text-lg font-bold text-white">Add Prescription Tablet</h3>
+                <button onclick="closeAddModal()" class="p-2 rounded-full hover:bg-white/10 transition-colors cursor-pointer text-gray-400 hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
             <form id="add-tablet-form" onsubmit="handleSaveTablet(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Tablet Name</label>
-                    <input type="text" id="input-name" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Tablet Name</label>
+                    <input type="text" id="input-name" required class="w-full px-4 py-3 rounded-2xl bg-black/50 border border-white/10 focus:outline-none focus:border-orange-500 text-sm text-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Dosage / Instructions</label>
-                    <input type="text" id="input-dosage" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Dosage / Instructions</label>
+                    <input type="text" id="input-dosage" required class="w-full px-4 py-3 rounded-2xl bg-black/50 border border-white/10 focus:outline-none focus:border-orange-500 text-sm text-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Time Slot</label>
-                    <select id="input-slot" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
-                        <option value="morning">Morning (Alerts after 9:00 AM)</option>
-                        <option value="afternoon">Afternoon (Alerts after 1:00 PM)</option>
-                        <option value="night">Night / Dinner (Alerts after 8:00 PM)</option>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Time Slot</label>
+                    <select id="input-slot" class="w-full px-4 py-3 rounded-2xl bg-black/50 border border-white/10 focus:outline-none focus:border-orange-500 text-sm text-white">
+                        <option value="morning" class="bg-zinc-900 text-white">Morning (Alerts after 9:00 AM)</option>
+                        <option value="afternoon" class="bg-zinc-900 text-white">Afternoon (Alerts after 1:00 PM)</option>
+                        <option value="night" class="bg-zinc-900 text-white">Night / Dinner (Alerts after 8:00 PM)</option>
                     </select>
                 </div>
                 <div class="pt-4 flex items-center justify-end space-x-3">
-                    <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 rounded-2xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 text-sm font-semibold transition-colors cursor-pointer">Cancel</button>
-                    <button type="submit" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer">Save Tablet</button>
+                    <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/15 text-sm font-semibold transition-colors cursor-pointer text-gray-300">Cancel</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-2xl btn-gradient text-white text-sm font-semibold shadow-lg shadow-orange-500/30 transition-all cursor-pointer">Save Tablet</button>
                 </div>
             </form>
         </div>
@@ -459,6 +439,7 @@
   appId: "1:1047224137032:web:f3576f32cb89b460aeef7d",
   measurementId: "G-XYMX9G8WP4"
 };
+
 
         let state = {
             currentUser: null,
@@ -479,7 +460,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('auramed_public_state_v4');
+            const saved = localStorage.getItem('auramed_chain_state_v1');
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
@@ -492,7 +473,7 @@
         }
 
         function saveState() {
-            localStorage.setItem('auramed_public_state_v4', JSON.stringify({
+            localStorage.setItem('auramed_chain_state_v1', JSON.stringify({
                 currentUser: state.currentUser,
                 registeredUsers: state.registeredUsers,
                 tablets: state.tablets,
@@ -502,17 +483,13 @@
 
         function refreshIcons() { lucide.createIcons(); }
 
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-        }
-
         function switchTab(tabName) {
             ['tracker', 'manager', 'calendar', 'network'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`tab-btn-${t}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/80 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2";
+                document.getElementById(`nav-tab-${t}`)?.classList.remove('bg-white/10', 'text-white');
             });
             document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-            document.getElementById(`tab-btn-${tabName}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 cursor-pointer flex items-center space-x-2";
+            document.getElementById(`nav-tab-${tabName}`)?.classList.add('bg-white/10', 'text-white');
             refreshIcons();
         }
 
@@ -682,7 +659,7 @@
             if (!state.currentUser) {
                 landingView.classList.remove('hidden');
                 appDashboard.classList.add('hidden');
-                document.getElementById('nav-auth-btn-text').innerText = 'Sign In / Register';
+                document.getElementById('nav-auth-btn-text').innerText = 'Sign In';
                 refreshIcons();
                 return;
             }
@@ -708,10 +685,10 @@
                 const boundMaster = state.registeredUsers.find(u => u.role === 'master' && u.masterCode === state.currentUser.boundMasterCode);
 
                 bindingBox.innerHTML = `
-                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Bind to Master Code</label>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Bind to Master Code</label>
                     <div class="flex space-x-2">
-                        <input type="text" id="input-bind-code" maxlength="4" value="${state.currentUser.boundMasterCode || ''}" placeholder="Enter 4-digit code" class="flex-1 px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 text-sm focus:outline-none focus:border-indigo-500 font-mono">
-                        <button onclick="handleBindMasterCode()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer">Bind</button>
+                        <input type="text" id="input-bind-code" maxlength="4" value="${state.currentUser.boundMasterCode || ''}" placeholder="Enter 4-digit code" class="flex-1 px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 text-sm focus:outline-none focus:border-orange-500 font-mono text-white">
+                        <button onclick="handleBindMasterCode()" class="px-4 py-2.5 btn-gradient text-white rounded-xl text-sm font-semibold transition-all cursor-pointer">Bind</button>
                     </div>
                 `;
 
@@ -720,25 +697,25 @@
 
                 if (boundMaster) {
                     visibilityContent.innerHTML = `
-                        <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold">
+                        <div class="p-4 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl btn-gradient text-white flex items-center justify-center font-bold">
                                 ${boundMaster.name.charAt(0)}
                             </div>
                             <div>
-                                <h5 class="font-bold text-sm text-gray-900 dark:text-white">${boundMaster.name}</h5>
-                                <p class="text-xs text-gray-600 dark:text-gray-400">${boundMaster.email} • Code: ${boundMaster.masterCode}</p>
+                                <h5 class="font-bold text-sm text-white">${boundMaster.name}</h5>
+                                <p class="text-xs text-gray-400">${boundMaster.email} • Code: ${boundMaster.masterCode}</p>
                             </div>
                         </div>
                     `;
                 } else if (state.currentUser.boundMasterCode) {
-                    visibilityContent.innerHTML = `<div class="text-xs text-gray-600 dark:text-gray-400 italic p-3">Bound to Master Code: ${state.currentUser.boundMasterCode} (Active)</div>`;
+                    visibilityContent.innerHTML = `<div class="text-xs text-gray-400 italic p-3">Bound to Master Code: ${state.currentUser.boundMasterCode} (Active)</div>`;
                 } else {
                     visibilityContent.innerHTML = `<div class="text-xs text-gray-500 italic p-3">No master caregiver bound yet. Enter a 4-digit master code to link.</div>`;
                 }
 
             } else {
                 bindingBox.innerHTML = `
-                    <div class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-xs text-indigo-700 dark:text-indigo-300 font-medium">
+                    <div class="p-3 rounded-xl bg-orange-500/10 text-xs text-orange-300 font-medium">
                         You are registered as a Master Caregiver. Share your code <strong>${state.currentUser.masterCode}</strong> with users so they can link to you.
                     </div>
                 `;
@@ -753,18 +730,18 @@
                     visibilityContent.innerHTML = '';
                     linkedUsers.forEach(usr => {
                         const div = document.createElement('div');
-                        div.className = "p-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-between";
+                        div.className = "p-3 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between";
                         div.innerHTML = `
                             <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-xs">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
                                     ${usr.name.charAt(0)}
                                 </div>
                                 <div>
-                                    <div class="font-bold text-sm text-gray-900 dark:text-white">${usr.name}</div>
-                                    <div class="text-xs text-gray-600 dark:text-gray-400">${usr.email}</div>
+                                    <div class="font-bold text-sm text-white">${usr.name}</div>
+                                    <div class="text-xs text-gray-400">${usr.email}</div>
                                 </div>
                             </div>
-                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">Connected ✓</span>
+                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400">Connected ✓</span>
                         `;
                         visibilityContent.appendChild(div);
                     });
@@ -786,20 +763,20 @@
                         if (isTaken) takenCount++;
 
                         const item = document.createElement('div');
-                        item.className = `p-4 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${isTaken ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-200' : 'bg-white/90 dark:bg-white/5 border-gray-200 dark:border-white/10 hover:border-indigo-500/50'}`;
+                        item.className = `p-4 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${isTaken ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-200' : 'bg-white/5 border-white/10 hover:border-orange-500/50'}`;
                         item.onclick = () => toggleTabletTaken(tablet.id);
 
                         item.innerHTML = `
                             <div class="flex items-center space-x-3">
-                                <div class="w-6 h-6 rounded-full flex items-center justify-center border transition-all ${isTaken ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-gray-400 dark:border-gray-600'}">
+                                <div class="w-6 h-6 rounded-full flex items-center justify-center border transition-all ${isTaken ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-gray-600'}">
                                     ${isTaken ? '<i data-lucide="check" class="w-3.5 h-3.5"></i>' : ''}
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-sm ${isTaken ? 'line-through opacity-80' : ''}">${tablet.name}</div>
-                                    <div class="text-xs text-gray-600 dark:text-gray-400">${tablet.dosage}</div>
+                                    <div class="font-semibold text-sm text-white ${isTaken ? 'line-through opacity-80' : ''}">${tablet.name}</div>
+                                    <div class="text-xs text-gray-400">${tablet.dosage}</div>
                                 </div>
                             </div>
-                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${isTaken ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400' : 'bg-gray-200 dark:bg-white/10 text-gray-700 dark:text-gray-400'}">
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${isTaken ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/10 text-gray-300'}">
                                 ${isTaken ? 'Taken ✓' : 'Pending'}
                             </span>
                         `;
@@ -823,27 +800,19 @@
             tbody.innerHTML = '';
             state.tablets.forEach(t => {
                 const tr = document.createElement('tr');
-                tr.className = 'hover:bg-black/5 dark:hover:bg-white/5 transition-colors';
+                tr.className = 'hover:bg-white/5 transition-colors';
                 tr.innerHTML = `
-                    <td class="py-4 px-4 font-semibold text-gray-900 dark:text-white">${t.name}</td>
-                    <td class="py-4 px-4 text-gray-600 dark:text-gray-400">${t.dosage}</td>
-                    <td class="py-4 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-semibold capitalize bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">${t.slot}</span></td>
+                    <td class="py-4 px-4 font-semibold text-white">${t.name}</td>
+                    <td class="py-4 px-4 text-gray-400">${t.dosage}</td>
+                    <td class="py-4 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-semibold capitalize bg-orange-500/10 text-orange-400">${t.slot}</span></td>
                     <td class="py-4 px-4 text-right">
-                        <button onclick="deleteTablet('${t.id}')" class="p-2 rounded-xl text-rose-500 hover:bg-rose-500/10 transition-colors cursor-pointer" title="Delete Tablet">
+                        <button onclick="deleteTablet('${t.id}')" class="p-2 rounded-xl text-rose-400 hover:bg-rose-500/10 transition-colors cursor-pointer" title="Delete Tablet">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                         </button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
-
-            const permContainer = document.getElementById('permissions-container');
-            permContainer.innerHTML = `
-                <label class="flex items-center space-x-3 p-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 cursor-pointer">
-                    <input type="checkbox" ${state.currentUser.monitorPermission ? 'checked' : ''} onchange="state.currentUser.monitorPermission = this.checked; saveState();" class="w-4 h-4 text-indigo-600 rounded">
-                    <span class="text-xs font-semibold text-gray-800 dark:text-gray-200">Enable Master Caregiver monitoring & 9am/1pm/8pm escalation alerts</span>
-                </label>
-            `;
 
             renderCalendar();
             checkTimeEscalation();
@@ -877,21 +846,21 @@
                 const isPartial = taken > 0 && taken < total;
 
                 const cell = document.createElement('div');
-                cell.className = `p-3 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer border ${dateKey === state.currentDate ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-500/10' : 'border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-white/5'}`;
+                cell.className = `p-3 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer border ${dateKey === state.currentDate ? 'border-orange-500 bg-orange-500/10' : 'border-white/10 hover:bg-white/5'}`;
                 cell.onclick = () => { state.currentDate = dateKey; switchTab('tracker'); };
 
-                let indicator = `<div class="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-700 mt-1.5"></div>`;
+                let indicator = `<div class="w-1.5 h-1.5 rounded-full bg-gray-700 mt-1.5"></div>`;
                 if (isComplete) indicator = `<div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5"></div>`;
                 else if (isPartial) indicator = `<div class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></div>`;
 
-                cell.innerHTML = `<span class="text-xs font-semibold text-gray-800 dark:text-gray-200">${day}</span>${indicator}`;
+                cell.innerHTML = `<span class="text-xs font-semibold text-gray-200">${day}</span>${indicator}`;
                 grid.appendChild(cell);
             }
         }
 
         loadState();
         renderApp();
-        setInterval(checkTimeEscalation, 900000); // 15-minute escalation check loop
+        setInterval(checkTimeEscalation, 900000); // 15-minute escalation loop check
     </script>
 </body>
 </html>
