@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraMed — Luxury Tablet Tracker</title>
+    <title>AuraMed — Luxury Tablet & Health Tracker</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
+    <!-- Google Fonts Inter for Apple Aesthetic -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -40,24 +40,23 @@
             -webkit-font-smoothing: antialiased;
         }
         .glass-panel-light {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(229, 229, 234, 0.6);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(229, 229, 234, 0.7);
         }
         .glass-panel-dark {
-            background: rgba(28, 28, 30, 0.75);
+            background: rgba(28, 28, 30, 0.8);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .apple-shadow {
-            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
         }
         .apple-shadow-dark {
             box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
         }
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -69,30 +68,30 @@
             background: rgba(150, 150, 150, 0.3);
             border-radius: 9999px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(150, 150, 150, 0.5);
-        }
-        @keyframes pulse-subtle {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
         .pulse-tap:active {
             transform: scale(0.97);
             transition: transform 0.1s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
         }
     </style>
 </head>
 <body class="h-full bg-apple-bgLight dark:bg-apple-bgDark text-gray-900 dark:text-gray-100 transition-colors duration-300 flex flex-col overflow-hidden">
 
-    <!-- Top Navigation Bar (Apple style header) -->
-    <header class="h-16 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 shrink-0 glass-panel-light dark:glass-panel-dark z-30">
+    <!-- Top Navigation Header -->
+    <header class="h-16 border-b border-gray-200/80 dark:border-gray-800 flex items-center justify-between px-6 shrink-0 glass-panel-light dark:glass-panel-dark z-30">
         <div class="flex items-center space-x-3">
             <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md">
                 <i class="fa-solid fa-pills text-sm"></i>
             </div>
             <div>
                 <h1 class="font-semibold text-base tracking-tight leading-none">AuraMed</h1>
-                <span class="text-xs text-gray-500 dark:text-gray-400">Personal Health Suite</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">Luxury Health Tracker</span>
             </div>
         </div>
         
@@ -101,10 +100,10 @@
             <button onclick="switchTab('dashboard')" id="nav-btn-dashboard" class="px-4 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm">Dashboard</button>
             <button onclick="switchTab('inventory')" id="nav-btn-inventory" class="px-4 py-1.5 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200">Inventory & Slots</button>
             <button onclick="switchTab('calendar')" id="nav-btn-calendar" class="px-4 py-1.5 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200">History Calendar</button>
-            <button onclick="switchTab('analytics')" id="nav-btn-analytics" class="px-4 py-1.5 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200">Adherence & Streak</button>
+            <button onclick="switchTab('analytics')" id="nav-btn-analytics" class="px-4 py-1.5 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200">Adherence & Analytics</button>
         </nav>
 
-        <!-- Right Utilities -->
+        <!-- Right Controls -->
         <div class="flex items-center space-x-3">
             <button onclick="toggleDarkMode()" class="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition" title="Toggle Theme">
                 <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
@@ -114,28 +113,49 @@
                 <div class="w-8 h-8 rounded-full bg-pink-500/20 text-pink-600 dark:text-pink-400 flex items-center justify-center font-semibold text-xs border border-pink-500/30">
                     W
                 </div>
-                <span class="text-xs font-medium hidden sm:inline">Wife's Health</span>
+                <span class="text-xs font-medium hidden sm:inline">Health Suite</span>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Body -->
+    <!-- Mobile Nav Bar (Bottom) -->
+    <div class="md:hidden flex items-center justify-around h-14 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 shrink-0 z-30 px-2">
+        <button onclick="switchTab('dashboard')" id="mob-btn-dashboard" class="flex flex-col items-center justify-center flex-1 py-1 text-blue-600 dark:text-blue-400">
+            <i class="fa-solid fa-house text-sm mb-0.5"></i>
+            <span class="text-[10px] font-medium">Home</span>
+        </button>
+        <button onclick="switchTab('inventory')" id="mob-btn-inventory" class="flex flex-col items-center justify-center flex-1 py-1 text-gray-500 dark:text-gray-400">
+            <i class="fa-solid fa-pills text-sm mb-0.5"></i>
+            <span class="text-[10px] font-medium">Tablets</span>
+        </button>
+        <button onclick="switchTab('calendar')" id="mob-btn-calendar" class="flex flex-col items-center justify-center flex-1 py-1 text-gray-500 dark:text-gray-400">
+            <i class="fa-regular fa-calendar-days text-sm mb-0.5"></i>
+            <span class="text-[10px] font-medium">Calendar</span>
+        </button>
+        <button onclick="switchTab('analytics')" id="mob-btn-analytics" class="flex flex-col items-center justify-center flex-1 py-1 text-gray-500 dark:text-gray-400">
+            <i class="fa-solid fa-chart-line text-sm mb-0.5"></i>
+            <span class="text-[10px] font-medium">Stats</span>
+        </button>
+    </div>
+
+    <!-- Main Content Container -->
     <main class="flex-1 overflow-y-auto relative">
         
-        <!-- ================= SECTION 1: DASHBOARD ================= -->
+        <!-- SECTION 1: DASHBOARD -->
         <section id="section-dashboard" class="max-w-6xl mx-auto p-6 md:p-8 space-y-8 animate-fadeIn">
-            <!-- Greeting & Date Banner -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-blue-600/10 via-indigo-600/15 to-purple-600/10 p-6 rounded-3xl border border-blue-500/20">
+            <!-- Greeting & Progress Header -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-gradient-to-r from-blue-600/10 via-indigo-600/15 to-purple-600/10 p-6 md:p-8 rounded-3xl border border-blue-500/20">
                 <div>
                     <div class="flex items-center space-x-2 text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider mb-1">
                         <i class="fa-regular fa-calendar"></i>
                         <span id="current-date-display">Loading date...</span>
                     </div>
-                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Daily Intake Check-in</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Tap tablets below as you take them. Consistency brings wellness.</p>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Today's Intake Schedule</h2>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Acknowledge each tablet as you take them throughout the day.</p>
                 </div>
-                <!-- Quick Progress Ring / Stats badge -->
-                <div class="flex items-center space-x-4 bg-white/60 dark:bg-gray-900/60 backdrop-blur-md px-5 py-3 rounded-2xl border border-gray-200/50 dark:border-gray-800/50 shadow-sm">
+                
+                <!-- Circular Adherence Progress Ring -->
+                <div class="flex items-center space-x-4 bg-white/70 dark:bg-gray-900/70 backdrop-blur-md px-6 py-4 rounded-2xl border border-gray-200/60 dark:border-gray-800/60 shadow-sm">
                     <div class="relative w-12 h-12 flex items-center justify-center">
                         <svg class="w-12 h-12 transform -rotate-90">
                             <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="4" class="text-gray-200 dark:text-gray-800 fill-none"></circle>
@@ -144,15 +164,15 @@
                         <span id="dashboard-progress-pct" class="absolute text-xs font-bold">0%</span>
                     </div>
                     <div>
-                        <div class="text-xs font-medium text-gray-500 dark:text-gray-400">Today's Progress</div>
+                        <div class="text-xs font-medium text-gray-500 dark:text-gray-400">Daily Adherence</div>
                         <div id="dashboard-progress-text" class="text-sm font-bold">0 of 0 taken</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Time Slots Grid (Morning, Afternoon, Night) -->
+            <!-- Slots Stack (Morning, Afternoon, Night) -->
             <div class="space-y-6">
-                <!-- MORNING SLOT -->
+                <!-- MORNING -->
                 <div class="bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800">
                     <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800/80">
                         <div class="flex items-center space-x-3">
@@ -169,11 +189,11 @@
                         </button>
                     </div>
                     <div id="container-tablets-Morning" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
-                        <!-- Dynamic tablets injected here -->
+                        <!-- Injected dynamically -->
                     </div>
                 </div>
 
-                <!-- AFTERNOON SLOT -->
+                <!-- AFTERNOON -->
                 <div class="bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800">
                     <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800/80">
                         <div class="flex items-center space-x-3">
@@ -190,11 +210,11 @@
                         </button>
                     </div>
                     <div id="container-tablets-Afternoon" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
-                        <!-- Dynamic tablets injected here -->
+                        <!-- Injected dynamically -->
                     </div>
                 </div>
 
-                <!-- NIGHT SLOT -->
+                <!-- NIGHT -->
                 <div class="bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800">
                     <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800/80">
                         <div class="flex items-center space-x-3">
@@ -211,18 +231,18 @@
                         </button>
                     </div>
                     <div id="container-tablets-Night" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
-                        <!-- Dynamic tablets injected here -->
+                        <!-- Injected dynamically -->
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= SECTION 2: INVENTORY & SLOTS ================= -->
+        <!-- SECTION 2: INVENTORY & SLOTS -->
         <section id="section-inventory" class="max-w-6xl mx-auto p-6 md:p-8 space-y-8 hidden animate-fadeIn">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Tablet Inventory & Schedules</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Add, customize, or remove tablets assigned to specific times of day.</p>
+                    <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Tablet Management</h2>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Add, configure, or remove tablets assigned to specific times of the day.</p>
                 </div>
                 <button onclick="openAddTabletModal()" class="px-5 py-2.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-lg shadow-blue-500/25 flex items-center space-x-2 transition pulse-tap">
                     <i class="fa-solid fa-plus"></i>
@@ -230,14 +250,14 @@
                 </button>
             </div>
 
-            <!-- List of All Registered Tablets -->
+            <!-- Tablet Table Card -->
             <div class="bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="border-b border-gray-200 dark:border-gray-800 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                                 <th class="pb-3 pl-2">Tablet Name</th>
-                                <th class="pb-3">Dosage / Info</th>
+                                <th class="pb-3">Dosage / Instructions</th>
                                 <th class="pb-3">Time Slot</th>
                                 <th class="pb-3 text-right pr-2">Action</th>
                             </tr>
@@ -250,12 +270,12 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 3: CALENDAR HISTORY ================= -->
+        <!-- SECTION 3: CALENDAR HISTORY -->
         <section id="section-calendar" class="max-w-6xl mx-auto p-6 md:p-8 space-y-8 hidden animate-fadeIn">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Intake History Calendar</h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Review past logs, check compliance status per day.</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Inspect past adherence logs or override any previous day's record.</p>
                 </div>
                 <div class="flex items-center space-x-3 bg-white dark:bg-apple-cardDark p-1.5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
                     <button onclick="changeMonth(-1)" class="w-8 h-8 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center text-sm transition"><i class="fa-solid fa-chevron-left"></i></button>
@@ -264,27 +284,24 @@
                 </div>
             </div>
 
-            <!-- Calendar Container -->
+            <!-- Calendar Layout Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Grid Calendar View (2 cols) -->
+                <!-- Grid Calendar View -->
                 <div class="lg:col-span-2 bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800">
-                    <!-- Weekday Header -->
                     <div class="grid grid-cols-7 gap-2 mb-4 text-center text-xs font-semibold text-gray-400">
                         <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
                     </div>
-                    <!-- Days Grid -->
                     <div id="calendar-days-grid" class="grid grid-cols-7 gap-2">
                         <!-- Generated days -->
                     </div>
-                    <!-- Legend -->
                     <div class="flex items-center justify-center space-x-6 mt-6 pt-4 border-t border-gray-100 dark:border-gray-800 text-xs text-gray-500 dark:text-gray-400">
-                        <div class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-emerald-500"></span><span>Complete</span></div>
+                        <div class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-emerald-500"></span><span>Complete (100%)</span></div>
                         <div class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-amber-500"></span><span>Partial</span></div>
                         <div class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-rose-500"></span><span>Missed / None</span></div>
                     </div>
                 </div>
 
-                <!-- Selected Day Detail Panel -->
+                <!-- Selected Date Detail Panel -->
                 <div class="bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800 flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800">
@@ -292,26 +309,25 @@
                             <span id="selected-date-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gray-100 dark:bg-gray-800 text-gray-500">No data</span>
                         </div>
                         <div id="selected-date-details-content" class="py-6 space-y-4 text-sm text-gray-600 dark:text-gray-300">
-                            <p class="text-xs text-gray-400 text-center py-8">Click any date on the calendar to inspect intake compliance logs.</p>
+                            <p class="text-xs text-gray-400 text-center py-8">Click any date on the calendar to inspect or toggle records.</p>
                         </div>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800/80 text-xs text-gray-500 dark:text-gray-400">
-                        <i class="fa-solid fa-circle-info mr-1 text-blue-500"></i> Past records are securely maintained in local storage.
+                        <i class="fa-solid fa-shield-halved mr-1 text-blue-500"></i> Records are securely stored in your browser's local storage.
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= SECTION 4: ANALYTICS & STREAKS ================= -->
+        <!-- SECTION 4: ANALYTICS & STREAKS -->
         <section id="section-analytics" class="max-w-6xl mx-auto p-6 md:p-8 space-y-8 hidden animate-fadeIn">
             <div>
                 <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Adherence & Streaks</h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Monitor compliance metrics, streaks, and health consistency.</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Review compliance consistency, active streaks, and health recommendations.</p>
             </div>
 
             <!-- Stats Overview Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <!-- Current Streak -->
                 <div class="bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800 flex items-center space-x-4">
                     <div class="w-14 h-14 rounded-2xl bg-orange-500/10 text-orange-500 flex items-center justify-center text-2xl">
                         <i class="fa-solid fa-fire"></i>
@@ -321,7 +337,6 @@
                         <div id="stat-current-streak" class="text-2xl font-extrabold tracking-tight mt-0.5">0 Days</div>
                     </div>
                 </div>
-                <!-- Overall Adherence Rate -->
                 <div class="bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800 flex items-center space-x-4">
                     <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-2xl">
                         <i class="fa-solid fa-chart-pie"></i>
@@ -331,7 +346,6 @@
                         <div id="stat-adherence-rate" class="text-2xl font-extrabold tracking-tight mt-0.5">0%</div>
                     </div>
                 </div>
-                <!-- Total Tablets Tracked -->
                 <div class="bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800 flex items-center space-x-4">
                     <div class="w-14 h-14 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-2xl">
                         <i class="fa-solid fa-pills"></i>
@@ -343,9 +357,9 @@
                 </div>
             </div>
 
-            <!-- Detailed Insights Box -->
+            <!-- Insights Box -->
             <div class="bg-white dark:bg-apple-cardDark rounded-3xl p-6 apple-shadow dark:apple-shadow-dark border border-gray-100 dark:border-gray-800 space-y-4">
-                <h3 class="font-bold text-lg">Health Insights & Recommendations</h3>
+                <h3 class="font-bold text-lg">Health Insights & Guidance</h3>
                 <div id="insights-container" class="space-y-3">
                     <!-- Dynamic insights -->
                 </div>
@@ -364,10 +378,10 @@
             <form id="form-add-tablet" onsubmit="handleSaveTablet(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Tablet / Medication Name</label>
-                    <input type="text" id="input-tablet-name" required placeholder="e.g., Vitamin D3, Calcium" class="w-full px-4 py-3 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+                    <input type="text" id="input-tablet-name" required placeholder="e.g., Multivitamin, Calcium" class="w-full px-4 py-3 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Dosage / Notes</label>
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Dosage / Instructions</label>
                     <input type="text" id="input-tablet-dosage" required placeholder="e.g., 500mg, 1 tablet after meal" class="w-full px-4 py-3 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                 </div>
                 <div>
@@ -386,8 +400,8 @@
         </div>
     </div>
 
-    <!-- Custom Notification Toast / Modal Box -->
-    <div id="custom-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <!-- Notification Toast -->
+    <div id="custom-toast" class="fixed bottom-16 md:bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
         <div class="bg-gray-900 text-white dark:bg-white dark:text-gray-900 px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 text-xs font-medium">
             <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
             <span id="toast-message">Notification message</span>
@@ -395,7 +409,7 @@
     </div>
 
     <script>
-        // Default Mock Data if none exists
+        // Initial sample data if local storage is empty
         const defaultTablets = [
             { id: 't1', name: 'Multivitamin', dosage: '1 tablet with breakfast', slot: 'Morning' },
             { id: 't2', name: 'Vitamin D3 1000IU', dosage: '1 capsule', slot: 'Morning' },
@@ -404,16 +418,16 @@
             { id: 't5', name: 'Omega-3 Fish Oil', dosage: '1 softgel with dinner', slot: 'Night' }
         ];
 
-        // State Management
+        // State initialization with localStorage fallback
         let tablets = JSON.parse(localStorage.getItem('auramed_tablets')) || defaultTablets;
         let logs = JSON.parse(localStorage.getItem('auramed_logs')) || {}; // Format: { "YYYY-MM-DD": { tabletId: true/false } }
         
         let currentCalendarDate = new Date();
         let selectedCalendarDateStr = getFormattedDateKey(new Date());
 
-        // Initialize App on Load
+        // Lifecycle onLoad
         window.onload = function() {
-            // Check theme
+            // Theme check
             if (localStorage.getItem('auramed_theme') === 'dark' || (!localStorage.getItem('auramed_theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                 document.documentElement.classList.add('dark');
                 updateThemeIcon(true);
@@ -429,7 +443,6 @@
             renderAnalytics();
         };
 
-        // Date utility helper
         function getFormattedDateKey(dateObj) {
             const year = dateObj.getFullYear();
             const month = String(dateObj.getMonth() + 1).padStart(2, '0');
@@ -442,18 +455,22 @@
             document.getElementById('current-date-display').innerText = new Date().toLocaleDateString('en-US', options).toUpperCase();
         }
 
-        // Navigation Tabs
+        // Tab Switching Router
         function switchTab(tabId) {
             const tabs = ['dashboard', 'inventory', 'calendar', 'analytics'];
             tabs.forEach(t => {
                 const section = document.getElementById(`section-${t}`);
-                const btn = document.getElementById(`nav-btn-${t}`);
+                const btnDesk = document.getElementById(`nav-btn-${t}`);
+                const btnMob = document.getElementById(`mob-btn-${t}`);
+                
                 if (t === tabId) {
                     section.classList.remove('hidden');
-                    btn.className = "px-4 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm";
+                    if (btnDesk) btnDesk.className = "px-4 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm";
+                    if (btnMob) btnMob.className = "flex flex-col items-center justify-center flex-1 py-1 text-blue-600 dark:text-blue-400";
                 } else {
                     section.classList.add('hidden');
-                    btn.className = "px-4 py-1.5 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200";
+                    if (btnDesk) btnDesk.className = "px-4 py-1.5 rounded-lg text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-200";
+                    if (btnMob) btnMob.className = "flex flex-col items-center justify-center flex-1 py-1 text-gray-500 dark:text-gray-400";
                 }
             });
 
@@ -473,7 +490,7 @@
             icon.className = isDark ? "fa-solid fa-sun text-sm" : "fa-solid fa-moon text-sm";
         }
 
-        // Render Dashboard
+        // Dashboard Rendering
         function renderDashboard() {
             const todayKey = getFormattedDateKey(new Date());
             if (!logs[todayKey]) logs[todayKey] = {};
@@ -514,10 +531,10 @@
                 }).join('');
             });
 
-            // Update progress circle & badge
+            // Update Progress Circle
             const pct = totalTablets > 0 ? Math.round((takenCount / totalTablets) * 100) : 0;
             const circle = document.getElementById('dashboard-progress-circle');
-            const circumference = 2 * Math.PI * 20; // r=20
+            const circumference = 2 * Math.PI * 20; 
             const offset = circumference - (pct / 100) * circumference;
             circle.style.strokeDashoffset = offset;
 
@@ -525,17 +542,19 @@
             document.getElementById('dashboard-progress-text').innerText = `${takenCount} of ${totalTablets} taken`;
         }
 
-        // Toggle individual tablet check-in status
         function toggleTabletLog(dateKey, tabletId) {
             if (!logs[dateKey]) logs[dateKey] = {};
             logs[dateKey][tabletId] = !logs[dateKey][tabletId];
             
             saveLogs();
             renderDashboard();
-            showToast(logs[dateKey][tabletId] ? "Tablet marked as taken" : "Tablet unmarked");
+            if (dateKey === getFormattedDateKey(new Date())) {
+                showToast(logs[dateKey][tabletId] ? "Tablet marked as taken" : "Tablet unmarked");
+            } else {
+                inspectCalendarDate(dateKey);
+            }
         }
 
-        // Mark entire slot complete
         function markSlotComplete(slotName) {
             const todayKey = getFormattedDateKey(new Date());
             if (!logs[todayKey]) logs[todayKey] = {};
@@ -550,7 +569,7 @@
             showToast(`${slotName} slot marked fully complete`);
         }
 
-        // Render Inventory Table
+        // Inventory Management
         function renderInventory() {
             const tbody = document.getElementById('inventory-table-body');
             
@@ -613,7 +632,7 @@
         }
 
         function deleteTablet(id) {
-            if (confirm("Are you sure you want to remove this tablet from inventory?")) {
+            if (window.confirm("Remove this tablet from active inventory?")) {
                 tablets = tablets.filter(t => t.id !== id);
                 saveTablets();
                 renderInventory();
@@ -641,12 +660,10 @@
             const grid = document.getElementById('calendar-days-grid');
             let html = '';
 
-            // Blank padding for previous month
             for (let i = 0; i < firstDayIndex; i++) {
                 html += `<div class="h-20 rounded-2xl bg-gray-50/50 dark:bg-gray-900/20 opacity-30"></div>`;
             }
 
-            // Days of month
             for (let day = 1; day <= totalDays; day++) {
                 const dateObj = new Date(year, month, day);
                 const dateKey = getFormattedDateKey(dateObj);
@@ -657,14 +674,11 @@
                 tablets.forEach(t => { if (dayLogs[t.id]) takenCount++; });
 
                 let statusDotColor = 'bg-gray-300 dark:bg-gray-700';
-                let statusBg = '';
                 if (totalTablets > 0) {
                     if (takenCount === totalTablets) {
                         statusDotColor = 'bg-emerald-500';
-                        statusBg = 'bg-emerald-500/10 border-emerald-500/30';
                     } else if (takenCount > 0) {
                         statusDotColor = 'bg-amber-500';
-                        statusBg = 'bg-amber-500/10 border-amber-500/30';
                     } else {
                         statusDotColor = 'bg-rose-500';
                     }
@@ -728,13 +742,13 @@
 
             content.innerHTML = `
                 <div class="space-y-2">
-                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Tablet Status Log</div>
+                    <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Click to Toggle Status</div>
                     ${tablets.map(t => {
                         const taken = !!dayLogs[t.id];
                         return `
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-xs">
+                            <div onclick="toggleTabletLog('${dateKey}', '${t.id}')" class="flex items-center justify-between p-2.5 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-xs cursor-pointer hover:border-blue-500 transition">
                                 <span class="font-medium">${t.name}</span>
-                                <span class="flex items-center space-x-1 ${taken ? 'text-emerald-500' : 'text-gray-400'}">
+                                <span class="flex items-center space-x-1 ${taken ? 'text-emerald-500 font-semibold' : 'text-gray-400'}">
                                     <i class="fa-solid ${taken ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
                                     <span>${taken ? 'Taken' : 'Missed'}</span>
                                 </span>
@@ -747,7 +761,6 @@
 
         // Analytics & Streak Calculation
         function renderAnalytics() {
-            // Calculate current streak
             let streak = 0;
             let currentDate = new Date();
             
@@ -761,7 +774,6 @@
                 let takenCount = 0;
                 tablets.forEach(t => { if (dayLogs[t.id]) takenCount++; });
 
-                // If today and not yet taken, allow checking yesterday first without breaking streak
                 const isToday = dateKey === getFormattedDateKey(new Date());
                 if (takenCount === total || (isToday && takenCount === 0)) {
                     if (takenCount === total) streak++;
@@ -770,12 +782,11 @@
                 }
 
                 currentDate.setDate(currentDate.getDate() - 1);
-                if (streak > 365) break; // safety guard
+                if (streak > 365) break;
             }
 
             document.getElementById('stat-current-streak').innerText = `${streak} Days`;
 
-            // Calculate 30-day adherence rate
             let totalPossible = 0;
             let totalTaken = 0;
             for (let i = 0; i < 30; i++) {
@@ -793,24 +804,19 @@
             const adherencePct = totalPossible > 0 ? Math.round((totalTaken / totalPossible) * 100) : 0;
             document.getElementById('stat-adherence-rate').innerText = `${adherencePct}%`;
 
-            // Insights
             const insightsContainer = document.getElementById('insights-container');
             let insightHtml = '';
 
             if (adherencePct >= 90) {
-                insightHtml += `<div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs flex items-start space-x-3"><i class="fa-solid fa-award text-base mt-0.5"></i><div><div class="font-bold">Exceptional Adherence!</div><p class="mt-0.5 opacity-90">Your adherence rate is stellar. Maintaining this habit ensures optimal health benefits.</p></div></div>`;
-            } else if (adherencePct >= 60) {
-                insightHtml += `<div class="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-700 dark:text-blue-300 text-xs flex items-start space-x-3"><i class="fa-solid fa-lightbulb text-base mt-0.5"></i><div><div class="font-bold">Good Consistency</div><p class="mt-0.5 opacity-90">You're on the right track. Try setting gentle reminders for afternoon or night slots to reach 100%.</p></div></div>`;
+                insightHtml += `<div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs flex items-start space-x-3"><i class="fa-solid fa-award text-base mt-0.5"></i><div><div class="font-bold">Exceptional Adherence!</div><p class="mt-0.5 opacity-90">Your compliance rate is wonderful. Consistency supports maximum wellness.</p></div></div>`;
             } else {
-                insightHtml += `<div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs flex items-start space-x-3"><i class="fa-solid fa-triangle-exclamation text-base mt-0.5"></i><div><div class="font-bold">Room for Improvement</div><p class="mt-0.5 opacity-90">Consistency is key for medication efficacy. Use the daily checklist every morning for best results.</p></div></div>`;
+                insightHtml += `<div class="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-700 dark:text-blue-300 text-xs flex items-start space-x-3"><i class="fa-solid fa-lightbulb text-base mt-0.5"></i><div><div class="font-bold">Building Healthy Routines</div><p class="mt-0.5 opacity-90">Keep checking off your tablets daily to grow your streak and health score.</p></div></div>`;
             }
-
-            insightHtml += `<div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 text-xs flex items-start space-x-3"><i class="fa-solid fa-heart-pulse text-base mt-0.5 text-pink-500"></i><div><div class="font-bold">Personalized Wellness Note</div><p class="mt-0.5 text-gray-500 dark:text-gray-400">All data is stored securely and privately in your browser's local storage.</p></div></div>`;
 
             insightsContainer.innerHTML = insightHtml;
         }
 
-        // Storage Persistence
+        // Persistence helpers
         function saveTablets() {
             localStorage.setItem('auramed_tablets', JSON.stringify(tablets));
         }
@@ -819,7 +825,6 @@
             localStorage.setItem('auramed_logs', JSON.stringify(logs));
         }
 
-        // Toast Feedback
         function showToast(message) {
             const toast = document.getElementById('custom-toast');
             document.getElementById('toast-message').innerText = message;
