@@ -13,13 +13,13 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.08);
         }
         .dark .glass-panel {
-            background: rgba(22, 22, 25, 0.8);
+            background: rgba(22, 22, 28, 0.85);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -42,7 +42,7 @@
 <body class="bg-[#F5F5F7] dark:bg-[#0B0B0E] text-[#1D1D1F] dark:text-[#F5F5F7] min-h-screen selection:bg-indigo-500 selection:text-white transition-colors duration-500">
 
     <!-- Top Navigation Bar -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-gray-200/50 dark:border-white/10 px-6 py-4">
+    <header class="sticky top-0 z-50 glass-panel border-b border-gray-200/60 dark:border-white/10 px-6 py-4">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
@@ -60,7 +60,7 @@
                     <span id="nav-auth-btn-text">Sign In / Register</span>
                 </button>
 
-                <button onclick="toggleDarkMode()" class="p-2.5 rounded-full bg-gray-200/70 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 hover:bg-gray-300 dark:hover:bg-white/10 transition-all text-gray-700 dark:text-gray-300 cursor-pointer" title="Toggle Theme">
+                <button onclick="toggleDarkMode()" class="p-2.5 rounded-full bg-gray-200/80 dark:bg-white/10 border border-gray-300/60 dark:border-white/10 hover:bg-gray-300 dark:hover:bg-white/20 transition-all text-gray-800 dark:text-gray-200 cursor-pointer" title="Toggle Theme">
                     <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
                     <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
                 </button>
@@ -87,7 +87,7 @@
                     <i data-lucide="check-square" class="w-5 h-5"></i>
                 </div>
                 <h3 class="font-bold text-base">Smart Schedule</h3>
-                <p class="text-xs text-gray-500">Easily organize pills across morning, afternoon, and night slots with one-tap acknowledgement.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Easily organize pills across morning, afternoon, and night slots with one-tap acknowledgement.</p>
             </div>
 
             <div class="glass-panel p-6 rounded-3xl apple-shadow space-y-3">
@@ -95,7 +95,7 @@
                     <i data-lucide="bell-ring" class="w-5 h-5"></i>
                 </div>
                 <h3 class="font-bold text-base">Caregiver Network</h3>
-                <p class="text-xs text-gray-500">Master users monitor multiple linked users with automated escalation checks and proxy sign-off.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Master users monitor multiple linked users with automated escalation checks and proxy sign-off.</p>
             </div>
 
             <div class="glass-panel p-6 rounded-3xl apple-shadow space-y-3">
@@ -103,7 +103,7 @@
                     <i data-lucide="cloud" class="w-5 h-5"></i>
                 </div>
                 <h3 class="font-bold text-base">Firebase Cloud Sync</h3>
-                <p class="text-xs text-gray-500">Secure user accounts and database persistence bound by unique 4-digit master codes.</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Secure user accounts and database persistence bound by unique 4-digit master codes.</p>
             </div>
         </div>
 
@@ -142,7 +142,7 @@
 
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div>
-                    <span id="user-role-badge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-3 border border-indigo-200/50 dark:border-indigo-500/20">
+                    <span id="user-role-badge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-3 border border-indigo-200 dark:border-indigo-500/20">
                         <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
                         <span id="role-text-badge">User Profile</span>
                     </span>
@@ -151,7 +151,7 @@
                 </div>
 
                 <!-- Progress Ring / Stats -->
-                <div class="flex items-center space-x-4 bg-white/80 dark:bg-white/5 p-4 rounded-2xl border border-gray-200/50 dark:border-white/10">
+                <div class="flex items-center space-x-4 bg-white/90 dark:bg-white/5 p-4 rounded-2xl border border-gray-200/80 dark:border-white/10">
                     <div class="relative flex items-center justify-center">
                         <svg class="w-16 h-16 transform -rotate-90">
                             <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="5" class="text-gray-200 dark:text-gray-800" fill="transparent"></circle>
@@ -177,15 +177,15 @@
                 <i data-lucide="check-square" class="w-4 h-4"></i>
                 <span>Daily Tracker</span>
             </button>
-            <button onclick="switchTab('manager')" id="tab-btn-manager" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/70 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
+            <button onclick="switchTab('manager')" id="tab-btn-manager" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/80 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
                 <i data-lucide="pills" class="w-4 h-4"></i>
                 <span>Manage Tablets</span>
             </button>
-            <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/70 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
+            <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/80 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
                 <i data-lucide="calendar-days" class="w-4 h-4"></i>
                 <span>History Calendar</span>
             </button>
-            <button onclick="switchTab('network')" id="tab-btn-network" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/70 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
+            <button onclick="switchTab('network')" id="tab-btn-network" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/80 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
                 <i data-lucide="key-round" class="w-4 h-4"></i>
                 <span>Master Link & Code</span>
             </button>
@@ -337,7 +337,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Master Code / Binding Card -->
-                    <div class="bg-white/60 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
+                    <div class="bg-white/80 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
                                 <i data-lucide="key" class="w-5 h-5"></i>
@@ -356,7 +356,7 @@
                     </div>
 
                     <!-- Visibility / Managed Users Card -->
-                    <div class="bg-white/60 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
+                    <div class="bg-white/80 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-500 flex items-center justify-center">
                                 <i data-lucide="users" class="w-5 h-5"></i>
@@ -390,15 +390,15 @@
 
             <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Email Address</label>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
                     <input type="email" id="auth-email" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Full Name</label>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
                     <input type="text" id="auth-name" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Select Role Type</label>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Select Role Type</label>
                     <select id="auth-role" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                         <option value="user">User (Tracking Daily Tablets)</option>
                         <option value="master">Master Caregiver (Monitoring & Alerts)</option>
@@ -425,15 +425,15 @@
 
             <form id="add-tablet-form" onsubmit="handleSaveTablet(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Tablet Name</label>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Tablet Name</label>
                     <input type="text" id="input-name" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Dosage / Instructions</label>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Dosage / Instructions</label>
                     <input type="text" id="input-dosage" required class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Time Slot</label>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Time Slot</label>
                     <select id="input-slot" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                         <option value="morning">Morning (Alerts after 9:00 AM)</option>
                         <option value="afternoon">Afternoon (Alerts after 1:00 PM)</option>
@@ -460,13 +460,11 @@
   measurementId: "G-XYMX9G8WP4"
 };
 
-
         let state = {
-            currentUser: null, // null triggers Landing View
-            // Global directory of registered users in the network for master/user visibility binding
+            currentUser: null,
             registeredUsers: [
                 { email: 'master@auramed.app', name: 'Dr. Sarah Master', role: 'master', masterCode: '8888', boundMasterCode: '' },
-                { email: 'user1@auramed.app', name: 'Alex Morgan', role: 'user', masterCode: '2026', boundMasterCode: '8888' }
+                { email: 'user@auramed.app', name: 'Alex Morgan', role: 'user', masterCode: '2026', boundMasterCode: '8888' }
             ],
             tablets: [
                 { id: 't1', name: 'Multivitamin', dosage: '1 tablet after breakfast', slot: 'morning' },
@@ -481,7 +479,7 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('auramed_public_state_v3');
+            const saved = localStorage.getItem('auramed_public_state_v4');
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
@@ -494,7 +492,7 @@
         }
 
         function saveState() {
-            localStorage.setItem('auramed_public_state_v3', JSON.stringify({
+            localStorage.setItem('auramed_public_state_v4', JSON.stringify({
                 currentUser: state.currentUser,
                 registeredUsers: state.registeredUsers,
                 tablets: state.tablets,
@@ -511,7 +509,7 @@
         function switchTab(tabName) {
             ['tracker', 'manager', 'calendar', 'network'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`tab-btn-${t}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/70 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2";
+                document.getElementById(`tab-btn-${t}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/80 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2";
             });
             document.getElementById(`tab-${tabName}`).classList.remove('hidden');
             document.getElementById(`tab-btn-${tabName}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 cursor-pointer flex items-center space-x-2";
@@ -557,12 +555,11 @@
 
         function handleAuthSubmit(e) {
             e.preventDefault();
-            const email = document.getElementById('auth-email').value;
-            const name = document.getElementById('auth-name').value;
+            const email = document.getElementById('auth-email').value.trim();
+            const name = document.getElementById('auth-name').value.trim();
             const role = document.getElementById('auth-role').value;
 
-            // Check if user already exists in directory
-            let existing = state.registeredUsers.find(u => u.email === email);
+            let existing = state.registeredUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
             if (!existing) {
                 existing = {
                     email,
@@ -584,12 +581,11 @@
         }
 
         function handleBindMasterCode() {
-            const code = document.getElementById('input-bind-code').value;
+            const code = document.getElementById('input-bind-code').value.trim();
             const foundMaster = state.registeredUsers.find(u => u.role === 'master' && u.masterCode === code);
-            
+
             if (code.length === 4) {
                 state.currentUser.boundMasterCode = code;
-                // Sync in registeredUsers directory
                 let reg = state.registeredUsers.find(u => u.email === state.currentUser.email);
                 if (reg) reg.boundMasterCode = code;
 
@@ -703,7 +699,6 @@
 
             document.getElementById('display-master-code').innerText = state.currentUser.masterCode;
 
-            // Render Master Link & Visibility Section based on role
             const bindingBox = document.getElementById('binding-action-box');
             const visibilityTitle = document.getElementById('visibility-card-title');
             const visibilitySubtitle = document.getElementById('visibility-card-subtitle');
@@ -711,9 +706,9 @@
 
             if (state.currentUser.role === 'user') {
                 const boundMaster = state.registeredUsers.find(u => u.role === 'master' && u.masterCode === state.currentUser.boundMasterCode);
-                
+
                 bindingBox.innerHTML = `
-                    <label class="block text-xs font-semibold text-gray-500 mb-1">Bind to Master Code</label>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Bind to Master Code</label>
                     <div class="flex space-x-2">
                         <input type="text" id="input-bind-code" maxlength="4" value="${state.currentUser.boundMasterCode || ''}" placeholder="Enter 4-digit code" class="flex-1 px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 text-sm focus:outline-none focus:border-indigo-500 font-mono">
                         <button onclick="handleBindMasterCode()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer">Bind</button>
@@ -730,21 +725,20 @@
                                 ${boundMaster.name.charAt(0)}
                             </div>
                             <div>
-                                <h5 class="font-bold text-sm">${boundMaster.name}</h5>
-                                <p class="text-xs text-gray-500">${boundMaster.email} • Code: ${boundMaster.masterCode}</p>
+                                <h5 class="font-bold text-sm text-gray-900 dark:text-white">${boundMaster.name}</h5>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">${boundMaster.email} • Code: ${boundMaster.masterCode}</p>
                             </div>
                         </div>
                     `;
                 } else if (state.currentUser.boundMasterCode) {
-                    visibilityContent.innerHTML = `<div class="text-xs text-gray-500 italic p-3">Bound to Master Code: ${state.currentUser.boundMasterCode} (Pending confirmation)</div>`;
+                    visibilityContent.innerHTML = `<div class="text-xs text-gray-600 dark:text-gray-400 italic p-3">Bound to Master Code: ${state.currentUser.boundMasterCode} (Active)</div>`;
                 } else {
-                    visibilityContent.innerHTML = `<div class="text-xs text-gray-400 italic p-3">No master caregiver bound yet. Enter a 4-digit master code to link.</div>`;
+                    visibilityContent.innerHTML = `<div class="text-xs text-gray-500 italic p-3">No master caregiver bound yet. Enter a 4-digit master code to link.</div>`;
                 }
 
             } else {
-                // Master Caregiver view
                 bindingBox.innerHTML = `
-                    <div class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-xs text-indigo-600 dark:text-indigo-400 font-medium">
+                    <div class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-xs text-indigo-700 dark:text-indigo-300 font-medium">
                         You are registered as a Master Caregiver. Share your code <strong>${state.currentUser.masterCode}</strong> with users so they can link to you.
                     </div>
                 `;
@@ -754,7 +748,7 @@
 
                 const linkedUsers = state.registeredUsers.filter(u => u.role === 'user' && u.boundMasterCode === state.currentUser.masterCode);
                 if (linkedUsers.length === 0) {
-                    visibilityContent.innerHTML = `<div class="text-xs text-gray-400 italic p-3">No users currently bound to your master code (${state.currentUser.masterCode}).</div>`;
+                    visibilityContent.innerHTML = `<div class="text-xs text-gray-500 italic p-3">No users currently bound to your master code (${state.currentUser.masterCode}).</div>`;
                 } else {
                     visibilityContent.innerHTML = '';
                     linkedUsers.forEach(usr => {
@@ -766,8 +760,8 @@
                                     ${usr.name.charAt(0)}
                                 </div>
                                 <div>
-                                    <div class="font-bold text-sm">${usr.name}</div>
-                                    <div class="text-xs text-gray-500">${usr.email}</div>
+                                    <div class="font-bold text-sm text-gray-900 dark:text-white">${usr.name}</div>
+                                    <div class="text-xs text-gray-600 dark:text-gray-400">${usr.email}</div>
                                 </div>
                             </div>
                             <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">Connected ✓</span>
@@ -792,7 +786,7 @@
                         if (isTaken) takenCount++;
 
                         const item = document.createElement('div');
-                        item.className = `p-4 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${isTaken ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-200' : 'bg-white/80 dark:bg-white/5 border-gray-200 dark:border-white/10 hover:border-indigo-500/50'}`;
+                        item.className = `p-4 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${isTaken ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-200' : 'bg-white/90 dark:bg-white/5 border-gray-200 dark:border-white/10 hover:border-indigo-500/50'}`;
                         item.onclick = () => toggleTabletTaken(tablet.id);
 
                         item.innerHTML = `
@@ -802,10 +796,10 @@
                                 </div>
                                 <div>
                                     <div class="font-semibold text-sm ${isTaken ? 'line-through opacity-80' : ''}">${tablet.name}</div>
-                                    <div class="text-xs text-gray-500 dark:text-gray-400">${tablet.dosage}</div>
+                                    <div class="text-xs text-gray-600 dark:text-gray-400">${tablet.dosage}</div>
                                 </div>
                             </div>
-                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${isTaken ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-gray-200 dark:bg-white/10 text-gray-600 dark:text-gray-400'}">
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${isTaken ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400' : 'bg-gray-200 dark:bg-white/10 text-gray-700 dark:text-gray-400'}">
                                 ${isTaken ? 'Taken ✓' : 'Pending'}
                             </span>
                         `;
@@ -831,7 +825,7 @@
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-black/5 dark:hover:bg-white/5 transition-colors';
                 tr.innerHTML = `
-                    <td class="py-4 px-4 font-semibold">${t.name}</td>
+                    <td class="py-4 px-4 font-semibold text-gray-900 dark:text-white">${t.name}</td>
                     <td class="py-4 px-4 text-gray-600 dark:text-gray-400">${t.dosage}</td>
                     <td class="py-4 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-semibold capitalize bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">${t.slot}</span></td>
                     <td class="py-4 px-4 text-right">
@@ -847,7 +841,7 @@
             permContainer.innerHTML = `
                 <label class="flex items-center space-x-3 p-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 cursor-pointer">
                     <input type="checkbox" ${state.currentUser.monitorPermission ? 'checked' : ''} onchange="state.currentUser.monitorPermission = this.checked; saveState();" class="w-4 h-4 text-indigo-600 rounded">
-                    <span class="text-xs font-semibold">Enable Master Caregiver monitoring & 9am/1pm/8pm escalation alerts</span>
+                    <span class="text-xs font-semibold text-gray-800 dark:text-gray-200">Enable Master Caregiver monitoring & 9am/1pm/8pm escalation alerts</span>
                 </label>
             `;
 
@@ -890,7 +884,7 @@
                 if (isComplete) indicator = `<div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5"></div>`;
                 else if (isPartial) indicator = `<div class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></div>`;
 
-                cell.innerHTML = `<span class="text-xs font-semibold">${day}</span>${indicator}`;
+                cell.innerHTML = `<span class="text-xs font-semibold text-gray-800 dark:text-gray-200">${day}</span>${indicator}`;
                 grid.appendChild(cell);
             }
         }
