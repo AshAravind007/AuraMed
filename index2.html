@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraMed — Multi-User Luxury Wellness & Tablet Tracker</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .dark .glass-panel {
+            background: rgba(22, 22, 25, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .apple-shadow {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+        }
+        .dark .apple-shadow {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-[#F5F5F7] dark:bg-[#0B0B0E] text-[#1D1D1F] dark:text-[#F5F5F7] min-h-screen selection:bg-indigo-500 selection:text-white transition-colors duration-500">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-gray-200/50 dark:border-white/10 px-6 py-4">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                    <i data-lucide="activity" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">AuraMed</h1>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Multi-User Care & Adherence</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <!-- Active User Selector Badge -->
+                <button onclick="openProfileModal()" class="flex items-center space-x-2 text-xs font-semibold px-3.5 py-2 rounded-2xl bg-indigo-50 dark:bg-white/5 border border-indigo-200/50 dark:border-white/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-white/10 transition-all cursor-pointer">
+                    <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+                    <span id="current-user-badge">Select User</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
+                </button>
+
+                <button onclick="toggleDarkMode()" class="p-2.5 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200/50 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-white/10 transition-all text-gray-700 dark:text-gray-300 cursor-pointer" title="Toggle Theme">
+                    <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
+                    <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+
+        <!-- Alert Banner for Master Users (Missed / Delayed Meds) -->
+        <div id="master-alert-banner" class="hidden glass-panel border-l-4 border-l-rose-500 rounded-2xl p-4 sm:p-5 flex items-start justify-between gap-4 apple-shadow animate-fade-in">
+            <div class="flex items-start space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0 mt-0.5">
+                    <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm text-rose-600 dark:text-rose-400">Adherence Alert Notice</h4>
+                    <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5" id="alert-message-text">One or more linked patients have pending or unacknowledged tablets for today.</p>
+                </div>
+            </div>
+            <button onclick="dismissAlertBanner()" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 transition-colors cursor-pointer shrink-0">Acknowledge</button>
+        </div>
+
+        <!-- Hero Overview Card -->
+        <section class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow relative overflow-hidden">
+            <div class="absolute -right-16 -top-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <span id="user-role-badge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-3 border border-indigo-200/50 dark:border-indigo-500/20">
+                        <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+                        <span id="role-text-badge">Patient Profile</span>
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight" id="hero-greeting">Welcome</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" id="hero-subtitle">Tracking health schedules with master caregiver oversight.</p>
+                </div>
+
+                <!-- Progress Ring / Stats -->
+                <div class="flex items-center space-x-4 bg-gray-50/80 dark:bg-white/5 p-4 rounded-2xl border border-gray-200/50 dark:border-white/10">
+                    <div class="relative flex items-center justify-center">
+                        <svg class="w-16 h-16 transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="5" class="text-gray-200 dark:text-gray-800" fill="transparent"></circle>
+                            <circle id="progress-ring" cx="32" cy="32" r="28" stroke="currentColor" stroke-width="5" class="text-indigo-600 dark:text-indigo-400 transition-all duration-700" stroke-dasharray="175.93" stroke-dashoffset="175.93" stroke-linecap="round" fill="transparent"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center text-xs font-bold" id="progress-text">0%</div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Adherence Score</div>
+                        <div class="text-lg font-bold" id="progress-fraction">0 / 0 Taken</div>
+                        <div class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-0.5 flex items-center space-x-1">
+                            <i data-lucide="check-circle-2" class="w-3 h-3"></i>
+                            <span id="streak-text">Active Monitoring</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <div class="flex space-x-2 border-b border-gray-200 dark:border-white/10 pb-4 overflow-x-auto">
+            <button onclick="switchTab('tracker')" id="tab-btn-tracker" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 cursor-pointer flex items-center space-x-2">
+                <i data-lucide="check-square" class="w-4 h-4"></i>
+                <span>Daily Tracker</span>
+            </button>
+            <button onclick="switchTab('manager')" id="tab-btn-manager" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
+                <i data-lucide="pills" class="w-4 h-4"></i>
+                <span>Manage Tablets</span>
+            </button>
+            <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
+                <i data-lucide="calendar-days" class="w-4 h-4"></i>
+                <span>History Calendar</span>
+            </button>
+            <button onclick="switchTab('network')" id="tab-btn-network" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                <span>Users & Master Link</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: DAILY TRACKER -->
+        <div id="tab-tracker" class="space-y-6 animate-fade-in">
+            <!-- Date Picker Bar -->
+            <div class="glass-panel p-4 rounded-2xl flex items-center justify-between">
+                <button onclick="changeDate(-1)" class="p-2 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+                <div class="text-center">
+                    <div id="active-date-display" class="font-bold text-base">Today</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400">Viewing active schedule</div>
+                </div>
+                <button onclick="changeDate(1)" class="p-2 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Slots Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="slots-container">
+                <!-- Morning Slot -->
+                <div class="glass-panel rounded-3xl p-6 apple-shadow flex flex-col justify-between border-t-4 border-t-amber-500">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2.5">
+                                <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                                    <i data-lucide="sunrise" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-base">Morning</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">8:00 AM</p>
+                                </div>
+                            </div>
+                            <span id="badge-morning" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-gray-500">0/0 Taken</span>
+                        </div>
+                        <div class="space-y-3 mt-4" id="list-morning"></div>
+                    </div>
+                </div>
+
+                <!-- Afternoon Slot -->
+                <div class="glass-panel rounded-3xl p-6 apple-shadow flex flex-col justify-between border-t-4 border-t-blue-500">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2.5">
+                                <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center">
+                                    <i data-lucide="sun" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-base">Afternoon</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">1:30 PM</p>
+                                </div>
+                            </div>
+                            <span id="badge-afternoon" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-gray-500">0/0 Taken</span>
+                        </div>
+                        <div class="space-y-3 mt-4" id="list-afternoon"></div>
+                    </div>
+                </div>
+
+                <!-- Night Slot -->
+                <div class="glass-panel rounded-3xl p-6 apple-shadow flex flex-col justify-between border-t-4 border-t-violet-500">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2.5">
+                                <div class="w-9 h-9 rounded-xl bg-violet-500/10 text-violet-500 flex items-center justify-center">
+                                    <i data-lucide="moon" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-base">Night</h3>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">9:00 PM</p>
+                                </div>
+                            </div>
+                            <span id="badge-night" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-gray-500">0/0 Taken</span>
+                        </div>
+                        <div class="space-y-3 mt-4" id="list-night"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: TABLET MANAGER -->
+        <div id="tab-manager" class="space-y-6 hidden animate-fade-in">
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold">Tablet Inventory</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Configure medications for the active profile.</p>
+                    </div>
+                    <button onclick="openAddModal()" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all cursor-pointer flex items-center justify-center space-x-2">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>Add New Tablet</span>
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-200 dark:border-white/10 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                                <th class="py-3 px-4">Tablet Name</th>
+                                <th class="py-3 px-4">Dosage</th>
+                                <th class="py-3 px-4">Time Slot</th>
+                                <th class="py-3 px-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablets-table-body" class="divide-y divide-gray-200 dark:divide-white/5 text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: CALENDAR -->
+        <div id="tab-calendar" class="space-y-6 hidden animate-fade-in">
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold" id="cal-month-year">September 2026</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Adherence history review</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="changeCalendarMonth(-1)" class="p-2.5 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/15 transition-colors cursor-pointer">
+                            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="changeCalendarMonth(1)" class="p-2.5 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/15 transition-colors cursor-pointer">
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-7 gap-2 text-center mb-3">
+                    <div class="text-xs font-bold text-gray-400">Mon</div>
+                    <div class="text-xs font-bold text-gray-400">Tue</div>
+                    <div class="text-xs font-bold text-gray-400">Wed</div>
+                    <div class="text-xs font-bold text-gray-400">Thu</div>
+                    <div class="text-xs font-bold text-gray-400">Fri</div>
+                    <div class="text-xs font-bold text-gray-400">Sat</div>
+                    <div class="text-xs font-bold text-gray-400">Sun</div>
+                </div>
+                <div id="calendar-grid" class="grid grid-cols-7 gap-2"></div>
+            </div>
+        </div>
+
+        <!-- TAB 4: USERS & MASTER LINK -->
+        <div id="tab-network" class="space-y-6 hidden animate-fade-in">
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold">Multi-User Profiles & Master Caregivers</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Manage family profiles and link fellow users as master trackers to receive instant alerts.</p>
+                    </div>
+                    <button onclick="openCreateUserModal()" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all cursor-pointer flex items-center justify-center space-x-2">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                        <span>Create Profile</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="profiles-grid"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Profile Switcher / Selection -->
+    <div id="profile-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full apple-shadow transform scale-95 transition-transform duration-300">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-bold">Switch User Profile</h3>
+                <button onclick="closeProfileModal()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="space-y-3" id="profile-switcher-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal: Add Tablet -->
+    <div id="add-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full apple-shadow transform scale-95 transition-transform duration-300" id="add-modal-content">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-bold">Add Prescription Tablet</h3>
+                <button onclick="closeAddModal()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="add-tablet-form" onsubmit="handleSaveTablet(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Tablet Name</label>
+                    <input type="text" id="input-name" required placeholder="e.g., Multivitamin, Calcium" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Dosage / Instructions</label>
+                    <input type="text" id="input-dosage" required placeholder="e.g., 1 tablet after food" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Time Slot</label>
+                    <select id="input-slot" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                        <option value="morning">Morning (8:00 AM)</option>
+                        <option value="afternoon">Afternoon (1:30 PM)</option>
+                        <option value="night">Night (9:00 PM)</option>
+                    </select>
+                </div>
+                <div class="pt-4 flex items-center justify-end space-x-3">
+                    <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 rounded-2xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-sm font-semibold transition-colors cursor-pointer">Cancel</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer">Save Tablet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Create Profile -->
+    <div id="create-user-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full apple-shadow transform scale-95 transition-transform duration-300">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-bold">Create New User Profile</h3>
+                <button onclick="closeCreateUserModal()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleCreateUser(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Full Name</label>
+                    <input type="text" id="new-user-name" required placeholder="e.g., Ananya Sharma" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Profile Role Type</label>
+                    <select id="new-user-role" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                        <option value="patient">Patient (Needs Tablet Tracking)</option>
+                        <option value="master">Master Caregiver / Fellow Tracker</option>
+                    </select>
+                </div>
+                <div class="pt-4 flex items-center justify-end space-x-3">
+                    <button type="button" onclick="closeCreateUserModal()" class="px-5 py-2.5 rounded-2xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-sm font-semibold transition-colors cursor-pointer">Cancel</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer">Create Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        let state = {
+            activeUserId: 'user-1',
+            users: [
+                { id: 'user-1', name: "Wife's Profile", role: 'patient', masterIds: ['user-2'] },
+                { id: 'user-2', name: 'Aravindaksha (Master Caregiver)', role: 'master', masterIds: [] }
+            ],
+            tablets: {
+                'user-1': [
+                    { id: 't1', name: 'biotin & folic acid tab', dosage: '1 tablet / after breakfast', slot: 'morning' },
+                    { id: 't2', name: 'Brivaracetam 50mg', dosage: '1 tab after breakfast', slot: 'morning' },
+                    { id: 't3', name: 'socril', dosage: '1 tablet / after lunch', slot: 'afternoon' },
+                    { id: 't4', name: 'Folvite 5MG', dosage: '1 tablet/ after DINNER', slot: 'night' },
+                    { id: 't5', name: 'susten 200', dosage: '1 tablet / after dinner', slot: 'night' },
+                    { id: 't6', name: 'caltuf', dosage: '1 tablet after dinner', slot: 'night' },
+                    { id: 't7', name: 'ecosprin 75mg', dosage: '1 tab after dinner', slot: 'night' },
+                    { id: 't8', name: 'Brivaracetam 50mg', dosage: '1 tablet after dinner', slot: 'night' }
+                ],
+                'user-2': []
+            },
+            logs: {
+                'user-1': {}
+            },
+            currentDate: new Date().toISOString().split('T')[0],
+            calendarMonth: new Date().getMonth(),
+            calendarYear: new Date().getFullYear(),
+            alertDismissed: false
+        };
+
+        function loadState() {
+            const saved = localStorage.getItem('auramed_multiusers_state');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    state.activeUserId = parsed.activeUserId || state.activeUserId;
+                    state.users = parsed.users || state.users;
+                    state.tablets = parsed.tablets || state.tablets;
+                    state.logs = parsed.logs || state.logs;
+                } catch (e) { console.error(e); }
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('auramed_multiusers_state', JSON.stringify({
+                activeUserId: state.activeUserId,
+                users: state.users,
+                tablets: state.tablets,
+                logs: state.logs
+            }));
+        }
+
+        function refreshIcons() { lucide.createIcons(); }
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        function switchTab(tabName) {
+            ['tracker', 'manager', 'calendar', 'network'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`tab-btn-${t}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2";
+            });
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-btn-${tabName}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 cursor-pointer flex items-center space-x-2";
+            refreshIcons();
+        }
+
+        function changeDate(days) {
+            const d = new Date(state.currentDate);
+            d.setDate(d.getDate() + days);
+            state.currentDate = d.toISOString().split('T')[0];
+            renderApp();
+        }
+
+        function formatDateDisplay(dateStr) {
+            const today = new Date().toISOString().split('T')[0];
+            if (dateStr === today) return "Today (" + dateStr + ")";
+            return dateStr;
+        }
+
+        function toggleTabletTaken(tabletId) {
+            if (!state.logs[state.activeUserId]) state.logs[state.activeUserId] = {};
+            if (!state.logs[state.activeUserId][state.currentDate]) state.logs[state.activeUserId][state.currentDate] = {};
+            
+            const dayLogs = state.logs[state.activeUserId][state.currentDate];
+            dayLogs[tabletId] = !dayLogs[tabletId];
+            saveState();
+            renderApp();
+        }
+
+        // Modal Controls
+        function openProfileModal() {
+            const list = document.getElementById('profile-switcher-list');
+            list.innerHTML = '';
+            state.users.forEach(u => {
+                const isSelected = u.id === state.activeUserId;
+                const div = document.createElement('div');
+                div.className = `p-4 rounded-2xl border flex items-center justify-between cursor-pointer transition-all ${isSelected ? 'bg-indigo-50 dark:bg-indigo-500/10 border-indigo-500' : 'bg-gray-50 dark:bg-white/5 border-gray-200/50 dark:border-white/10 hover:border-indigo-400'}`;
+                div.onclick = () => {
+                    state.activeUserId = u.id;
+                    saveState();
+                    closeProfileModal();
+                    renderApp();
+                };
+                div.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-xl bg-indigo-600/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">
+                            ${u.name.charAt(0)}
+                        </div>
+                        <div>
+                            <div class="font-bold text-sm">${u.name}</div>
+                            <div class="text-xs text-gray-500 uppercase font-semibold">${u.role}</div>
+                        </div>
+                    </div>
+                    ${isSelected ? '<span class="text-xs font-bold text-indigo-600">Active</span>' : ''}
+                `;
+                list.appendChild(div);
+            });
+
+            const modal = document.getElementById('profile-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); modal.children[0].classList.remove('scale-95'); }, 10);
+        }
+
+        function closeProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            modal.classList.add('opacity-0');
+            modal.children[0].classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function openAddModal() {
+            const modal = document.getElementById('add-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); modal.querySelector('#add-modal-content').classList.remove('scale-95'); }, 10);
+        }
+
+        function closeAddModal() {
+            const modal = document.getElementById('add-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('#add-modal-content').classList.add('scale-95');
+            setTimeout(() => { modal.classList.add('hidden'); document.getElementById('add-tablet-form').reset(); }, 300);
+        }
+
+        function handleSaveTablet(e) {
+            e.preventDefault();
+            const name = document.getElementById('input-name').value;
+            const dosage = document.getElementById('input-dosage').value;
+            const slot = document.getElementById('input-slot').value;
+
+            if (!state.tablets[state.activeUserId]) state.tablets[state.activeUserId] = [];
+            state.tablets[state.activeUserId].push({ id: 't_' + Date.now(), name, dosage, slot });
+            saveState();
+            closeAddModal();
+            renderApp();
+        }
+
+        function deleteTablet(id) {
+            state.tablets[state.activeUserId] = state.tablets[state.activeUserId].filter(t => t.id !== id);
+            saveState();
+            renderApp();
+        }
+
+        function openCreateUserModal() {
+            const modal = document.getElementById('create-user-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); modal.children[0].classList.remove('scale-95'); }, 10);
+        }
+
+        function closeCreateUserModal() {
+            const modal = document.getElementById('create-user-modal');
+            modal.classList.add('opacity-0');
+            modal.children[0].classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function handleCreateUser(e) {
+            e.preventDefault();
+            const name = document.getElementById('new-user-name').value;
+            const role = document.getElementById('new-user-role').value;
+            const newId = 'user_' + Date.now();
+
+            state.users.push({ id: newId, name, role, masterIds: role === 'patient' ? [state.activeUserId] : [] });
+            state.tablets[newId] = [];
+            state.logs[newId] = {};
+            state.activeUserId = newId;
+            saveState();
+            closeCreateUserModal();
+            renderApp();
+        }
+
+        function toggleMasterLink(patientId, masterId) {
+            const patient = state.users.find(u => u.id === patientId);
+            if (!patient) return;
+            if (!patient.masterIds) patient.masterIds = [];
+            if (patient.masterIds.includes(masterId)) {
+                patient.masterIds = patient.masterIds.filter(id => id !== masterId);
+            } else {
+                patient.masterIds.push(masterId);
+            }
+            saveState();
+            renderApp();
+        }
+
+        function dismissAlertBanner() {
+            state.alertDismissed = true;
+            document.getElementById('master-alert-banner').classList.add('hidden');
+        }
+
+        function changeCalendarMonth(delta) {
+            state.calendarMonth += delta;
+            if (state.calendarMonth > 11) { state.calendarMonth = 0; state.calendarYear++; }
+            else if (state.calendarMonth < 0) { state.calendarMonth = 11; state.calendarYear--; }
+            renderCalendar();
+        }
+
+        // Render App
+        function renderApp() {
+            const activeUser = state.users.find(u => u.id === state.activeUserId) || state.users[0];
+            document.getElementById('current-user-badge').innerText = activeUser.name;
+            document.getElementById('role-text-badge').innerText = `${activeUser.role.toUpperCase()} PROFILE`;
+            document.getElementById('hero-greeting').innerText = `Hello, ${activeUser.name}`;
+            document.getElementById('hero-subtitle').innerText = activeUser.role === 'master' 
+                ? 'Master Caregiver Dashboard: Monitoring linked patient adherence & alerts in real time.' 
+                : 'Patient Dashboard: Track daily tablet schedules and notify your master caregivers.';
+
+            // Check alerts for master users
+            const alertBanner = document.getElementById('master-alert-banner');
+            if (activeUser.role === 'master' && !state.alertDismissed) {
+                const today = new Date().toISOString().split('T')[0];
+                const linkedPatients = state.users.filter(u => u.role === 'patient' && (!u.masterIds || u.masterIds.includes(activeUser.id)));
+                let pendingCount = 0;
+                linkedPatients.forEach(p => {
+                    const tabs = state.tablets[p.id] || [];
+                    const logs = (state.logs[p.id] && state.logs[p.id][today]) || {};
+                    const taken = tabs.filter(t => logs[t.id]).length;
+                    if (tabs.length > 0 && taken < tabs.length) pendingCount++;
+                });
+
+                if (pendingCount > 0) {
+                    alertBanner.classList.remove('hidden');
+                    document.getElementById('alert-message-text').innerText = `${pendingCount} linked patient(s) have pending or unacknowledged tablets for today.`;
+                } else {
+                    alertBanner.classList.add('hidden');
+                }
+            } else {
+                alertBanner.classList.add('hidden');
+            }
+
+            // Tracker Slots
+            const userTablets = state.tablets[activeUser.id] || [];
+            const userLogs = (state.logs[activeUser.id] && state.logs[activeUser.id][state.currentDate]) || {};
+
+            ['morning', 'afternoon', 'night'].forEach(slot => {
+                const container = document.getElementById(`list-${slot}`);
+                container.innerHTML = '';
+                const slotTablets = userTablets.filter(t => t.slot === slot);
+                let takenCount = 0;
+
+                if (slotTablets.length === 0) {
+                    container.innerHTML = `<div class="text-xs text-gray-400 italic py-2">No tablets scheduled</div>`;
+                } else {
+                    slotTablets.forEach(tablet => {
+                        const isTaken = !!userLogs[tablet.id];
+                        if (isTaken) takenCount++;
+
+                        const item = document.createElement('div');
+                        item.className = `p-4 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${isTaken ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-200' : 'bg-gray-50 dark:bg-white/5 border-gray-200/50 dark:border-white/10 hover:border-indigo-500/50'}`;
+                        item.onclick = () => toggleTabletTaken(tablet.id);
+
+                        item.innerHTML = `
+                            <div class="flex items-center space-x-3">
+                                <div class="w-6 h-6 rounded-full flex items-center justify-center border transition-all ${isTaken ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-gray-300 dark:border-gray-600'}">
+                                    ${isTaken ? '<i data-lucide="check" class="w-3.5 h-3.5"></i>' : ''}
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-sm ${isTaken ? 'line-through opacity-80' : ''}">${tablet.name}</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">${tablet.dosage}</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${isTaken ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-gray-200 dark:bg-white/10 text-gray-600 dark:text-gray-400'}">
+                                ${isTaken ? 'Taken' : 'Pending'}
+                            </span>
+                        `;
+                        container.appendChild(item);
+                    });
+                }
+                document.getElementById(`badge-${slot}`).innerText = `${takenCount}/${slotTablets.length} Taken`;
+            });
+
+            // Progress stats
+            const total = userTablets.length;
+            const takenTotal = userTablets.filter(t => userLogs[t.id]).length;
+            const percent = total > 0 ? Math.round((takenTotal / total) * 100) : 0;
+            const circumference = 2 * Math.PI * 28;
+            const offset = circumference - (percent / 100) * circumference;
+            document.getElementById('progress-ring').style.strokeDashoffset = offset;
+            document.getElementById('progress-text').innerText = `${percent}%`;
+            document.getElementById('progress-fraction').innerText = `${takenTotal} / ${total} Taken`;
+            document.getElementById('active-date-display').innerText = formatDateDisplay(state.currentDate);
+
+            // Tablet Manager Table
+            const tbody = document.getElementById('tablets-table-body');
+            tbody.innerHTML = '';
+            if (userTablets.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-gray-400 text-sm">No tablets added for ${activeUser.name}.</td></tr>`;
+            } else {
+                userTablets.forEach(t => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors';
+                    tr.innerHTML = `
+                        <td class="py-4 px-4 font-semibold">${t.name}</td>
+                        <td class="py-4 px-4 text-gray-500 dark:text-gray-400">${t.dosage}</td>
+                        <td class="py-4 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-semibold capitalize bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">${t.slot}</span></td>
+                        <td class="py-4 px-4 text-right">
+                            <button onclick="deleteTablet('${t.id}')" class="p-2 rounded-xl text-rose-500 hover:bg-rose-500/10 transition-colors cursor-pointer" title="Delete Tablet">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Render Network / Master Link Tab
+            const pGrid = document.getElementById('profiles-grid');
+            pGrid.innerHTML = '';
+            state.users.forEach(u => {
+                const isCurrent = u.id === state.activeUserId;
+                const card = document.createElement('div');
+                card.className = `glass-panel p-6 rounded-3xl apple-shadow space-y-4 border ${isCurrent ? 'border-indigo-500/50' : 'border-gray-200/50 dark:border-white/10'}`;
+                
+                let masterLinksHtml = '';
+                if (u.role === 'patient') {
+                    masterLinksHtml = `<div class="pt-3 border-t border-gray-200 dark:border-white/10 space-y-2"><div class="text-xs font-semibold text-gray-500">Linked Master Caregivers:</div><div class="flex flex-wrap gap-2">`;
+                    const masterUsers = state.users.filter(usr => usr.role === 'master');
+                    masterUsers.forEach(m => {
+                        const isLinked = u.masterIds && u.masterIds.includes(m.id);
+                        masterLinksHtml += `<button onclick="toggleMasterLink('${u.id}', '${m.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${isLinked ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200'}">${m.name} ${isLinked ? '✓' : '+'}</button>`;
+                    });
+                    masterLinksHtml += `</div></div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-bold text-base shadow-lg shadow-indigo-600/30">
+                                ${u.name.charAt(0)}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-base">${u.name}</h4>
+                                <span class="text-xs font-semibold uppercase text-indigo-500">${u.role}</span>
+                            </div>
+                        </div>
+                        ${isCurrent ? '<span class="px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-500 text-xs font-bold">Active</span>' : `<button onclick="state.activeUserId='${u.id}'; saveState(); renderApp();" class="px-3 py-1.5 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 text-xs font-semibold cursor-pointer">Switch</button>`}
+                    </div>
+                    ${masterLinksHtml}
+                `;
+                pGrid.appendChild(card);
+            });
+
+            renderCalendar();
+            refreshIcons();
+        }
+
+        function renderCalendar() {
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            document.getElementById('cal-month-year').innerText = `${monthNames[state.calendarMonth]} ${state.calendarYear}`;
+
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
+
+            const activeUser = state.users.find(u => u.id === state.activeUserId) || state.users[0];
+            const userTablets = state.tablets[activeUser.id] || [];
+            const userLogs = state.logs[activeUser.id] || {};
+
+            const firstDayIndex = new Date(state.calendarYear, state.calendarMonth, 1).getDay();
+            let startDay = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+            const totalDays = new Date(state.calendarYear, state.calendarMonth + 1, 0).getDate();
+
+            for (let i = 0; i < startDay; i++) {
+                grid.appendChild(document.createElement('div'));
+            }
+
+            for (let day = 1; day <= totalDays; day++) {
+                const monthStr = String(state.calendarMonth + 1).padStart(2, '0');
+                const dayStr = String(day).padStart(2, '0');
+                const dateKey = `${state.calendarYear}-${monthStr}-${dayStr}`;
+
+                const dayLogs = userLogs[dateKey] || {};
+                const total = userTablets.length;
+                const taken = userTablets.filter(t => dayLogs[t.id]).length;
+                const isComplete = total > 0 && taken === total;
+                const isPartial = taken > 0 && taken < total;
+
+                const cell = document.createElement('div');
+                cell.className = `p-3 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer border ${dateKey === state.currentDate ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-500/10' : 'border-gray-200/50 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/5'}`;
+                cell.onclick = () => { state.currentDate = dateKey; switchTab('tracker'); };
+
+                let indicator = `<div class="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700 mt-1.5"></div>`;
+                if (isComplete) indicator = `<div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5"></div>`;
+                else if (isPartial) indicator = `<div class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></div>`;
+
+                cell.innerHTML = `<span class="text-xs font-semibold">${day}</span>${indicator}`;
+                grid.appendChild(cell);
+            }
+        }
+
+        loadState();
+        renderApp();
+    </script>
+</body>
+</html>
