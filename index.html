@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AuraMed — Multi-User Luxury Wellness & Master Care</title>
+    <title>AuraMed — Public Health Adherence & Caregiver Network</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Lucide Icons -->
@@ -13,10 +13,10 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.06);
         }
         .dark .glass-panel {
             background: rgba(22, 22, 25, 0.75);
@@ -25,7 +25,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .apple-shadow {
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
         }
         .dark .apple-shadow {
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
@@ -50,18 +50,17 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-lg tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">AuraMed</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Cloud Care & Adherence Network</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Public Adherence & Care Network</p>
                 </div>
             </div>
 
             <div class="flex items-center space-x-3">
-                <button onclick="openAuthModal()" class="flex items-center space-x-2 text-xs font-semibold px-3.5 py-2 rounded-2xl bg-indigo-50 dark:bg-white/5 border border-indigo-200/50 dark:border-white/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-white/10 transition-all cursor-pointer">
+                <button onclick="openAuthModal()" class="flex items-center space-x-2 text-xs font-semibold px-4 py-2.5 rounded-2xl bg-indigo-600 text-white hover:bg-indigo-500 transition-all shadow-md shadow-indigo-500/20 cursor-pointer">
                     <i data-lucide="user-circle" class="w-4 h-4"></i>
-                    <span id="current-user-badge">Sign In / Register</span>
-                    <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
+                    <span id="nav-auth-btn-text">Sign In / Register</span>
                 </button>
 
-                <button onclick="toggleDarkMode()" class="p-2.5 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200/50 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-white/10 transition-all text-gray-700 dark:text-gray-300 cursor-pointer" title="Toggle Theme">
+                <button onclick="toggleDarkMode()" class="p-2.5 rounded-full bg-gray-200/70 dark:bg-white/5 border border-gray-300/50 dark:border-white/10 hover:bg-gray-300 dark:hover:bg-white/10 transition-all text-gray-700 dark:text-gray-300 cursor-pointer" title="Toggle Theme">
                     <i data-lucide="moon" class="w-4 h-4 dark:hidden"></i>
                     <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
                 </button>
@@ -79,8 +78,8 @@
                     <i data-lucide="bell-ring" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h4 class="font-bold text-sm text-rose-600 dark:text-rose-400" id="alert-title-heading">Urgent Adherence Escalation</h4>
-                    <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5" id="alert-message-text">Tablets are overdue! Master user notification active.</p>
+                    <h4 class="font-bold text-sm text-rose-600 dark:text-rose-400" id="alert-title-heading">Adherence Escalation Notice</h4>
+                    <p class="text-xs text-gray-700 dark:text-gray-300 mt-0.5" id="alert-message-text">Linked user has pending medications past scheduled time. Master proxy override available.</p>
                 </div>
             </div>
             <div class="flex items-center space-x-2 shrink-0">
@@ -98,14 +97,14 @@
                 <div>
                     <span id="user-role-badge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 mb-3 border border-indigo-200/50 dark:border-indigo-500/20">
                         <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                        <span id="role-text-badge">Patient Profile</span>
+                        <span id="role-text-badge">User Profile</span>
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-bold tracking-tight" id="hero-greeting">Welcome to AuraMed</h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" id="hero-subtitle">Secure cloud tracking with automated master caregiver alerts.</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1" id="hero-subtitle">Secure cloud medication tracking with automated master caregiver alerts.</p>
                 </div>
 
                 <!-- Progress Ring / Stats -->
-                <div class="flex items-center space-x-4 bg-gray-50/80 dark:bg-white/5 p-4 rounded-2xl border border-gray-200/50 dark:border-white/10">
+                <div class="flex items-center space-x-4 bg-white/80 dark:bg-white/5 p-4 rounded-2xl border border-gray-200/50 dark:border-white/10">
                     <div class="relative flex items-center justify-center">
                         <svg class="w-16 h-16 transform -rotate-90">
                             <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="5" class="text-gray-200 dark:text-gray-800" fill="transparent"></circle>
@@ -118,7 +117,7 @@
                         <div class="text-lg font-bold" id="progress-fraction">0 / 0 Taken</div>
                         <div class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-0.5 flex items-center space-x-1">
                             <i data-lucide="cloud-check" class="w-3 h-3"></i>
-                            <span id="streak-text">Cloud Synchronized</span>
+                            <span id="streak-text">Cloud Sync Ready</span>
                         </div>
                     </div>
                 </div>
@@ -131,36 +130,36 @@
                 <i data-lucide="check-square" class="w-4 h-4"></i>
                 <span>Daily Tracker</span>
             </button>
-            <button onclick="switchTab('manager')" id="tab-btn-manager" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
+            <button onclick="switchTab('manager')" id="tab-btn-manager" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/70 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
                 <i data-lucide="pills" class="w-4 h-4"></i>
                 <span>Manage Tablets</span>
             </button>
-            <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
+            <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/70 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
                 <i data-lucide="calendar-days" class="w-4 h-4"></i>
                 <span>History Calendar</span>
             </button>
-            <button onclick="switchTab('network')" id="tab-btn-network" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
+            <button onclick="switchTab('network')" id="tab-btn-network" class="px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/70 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2">
                 <i data-lucide="key-round" class="w-4 h-4"></i>
-                <span>Master Link & Permissions</span>
+                <span>Master Link & Code</span>
             </button>
         </div>
 
         <!-- TAB 1: DAILY TRACKER -->
         <div id="tab-tracker" class="space-y-6 animate-fade-in">
             <div class="glass-panel p-4 rounded-2xl flex items-center justify-between">
-                <button onclick="changeDate(-1)" class="p-2 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                <button onclick="changeDate(-1)" class="p-2 rounded-xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/10 transition-colors cursor-pointer">
                     <i data-lucide="chevron-left" class="w-5 h-5"></i>
                 </button>
                 <div class="text-center">
                     <div id="active-date-display" class="font-bold text-base">Today</div>
                     <div class="text-xs text-gray-500 dark:text-gray-400">Master proxy acknowledgement enabled</div>
                 </div>
-                <button onclick="changeDate(1)" class="p-2 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
+                <button onclick="changeDate(1)" class="p-2 rounded-xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/10 transition-colors cursor-pointer">
                     <i data-lucide="chevron-right" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="slots-container">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Morning Slot -->
                 <div class="glass-panel rounded-3xl p-6 apple-shadow flex flex-col justify-between border-t-4 border-t-amber-500">
                     <div>
@@ -171,10 +170,10 @@
                                 </div>
                                 <div>
                                     <h3 class="font-bold text-base">Morning</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Alerts after 9:00 AM</p>
+                                    <p class="text-xs text-gray-500">Alerts after 9:00 AM</p>
                                 </div>
                             </div>
-                            <span id="badge-morning" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-gray-500">0/0 Taken</span>
+                            <span id="badge-morning" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-200 dark:bg-white/5 text-gray-600 dark:text-gray-400">0/0 Taken</span>
                         </div>
                         <div class="space-y-3 mt-4" id="list-morning"></div>
                     </div>
@@ -190,10 +189,10 @@
                                 </div>
                                 <div>
                                     <h3 class="font-bold text-base">Afternoon</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Alerts after 1:00 PM</p>
+                                    <p class="text-xs text-gray-500">Alerts after 1:00 PM</p>
                                 </div>
                             </div>
-                            <span id="badge-afternoon" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-gray-500">0/0 Taken</span>
+                            <span id="badge-afternoon" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-200 dark:bg-white/5 text-gray-600 dark:text-gray-400">0/0 Taken</span>
                         </div>
                         <div class="space-y-3 mt-4" id="list-afternoon"></div>
                     </div>
@@ -209,10 +208,10 @@
                                 </div>
                                 <div>
                                     <h3 class="font-bold text-base">Night / Dinner</h3>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Alerts after 8:00 PM</p>
+                                    <p class="text-xs text-gray-500">Alerts after 8:00 PM</p>
                                 </div>
                             </div>
-                            <span id="badge-night" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-gray-500">0/0 Taken</span>
+                            <span id="badge-night" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-200 dark:bg-white/5 text-gray-600 dark:text-gray-400">0/0 Taken</span>
                         </div>
                         <div class="space-y-3 mt-4" id="list-night"></div>
                     </div>
@@ -226,7 +225,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
                         <h3 class="text-xl font-bold">Tablet Inventory</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Preset prescriptions synced securely across devices.</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Manage medications and custom dosage instructions.</p>
                     </div>
                     <button onclick="openAddModal()" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all cursor-pointer flex items-center justify-center space-x-2">
                         <i data-lucide="plus" class="w-4 h-4"></i>
@@ -237,9 +236,9 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-gray-200 dark:border-white/10 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                            <tr class="border-b border-gray-200 dark:border-white/10 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                                 <th class="py-3 px-4">Tablet Name</th>
-                                <th class="py-3 px-4">Dosage</th>
+                                <th class="py-3 px-4">Dosage / Instructions</th>
                                 <th class="py-3 px-4">Time Slot</th>
                                 <th class="py-3 px-4 text-right">Actions</th>
                             </tr>
@@ -256,72 +255,70 @@
                 <div class="flex items-center justify-between mb-6">
                     <div>
                         <h3 class="text-xl font-bold" id="cal-month-year">September 2026</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Adherence audit & history review</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Monthly adherence history audit</p>
                     </div>
                     <div class="flex items-center space-x-2">
-                        <button onclick="changeCalendarMonth(-1)" class="p-2.5 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/15 transition-colors cursor-pointer">
+                        <button onclick="changeCalendarMonth(-1)" class="p-2.5 rounded-xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/15 transition-colors cursor-pointer">
                             <i data-lucide="chevron-left" class="w-4 h-4"></i>
                         </button>
-                        <button onclick="changeCalendarMonth(1)" class="p-2.5 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/15 transition-colors cursor-pointer">
+                        <button onclick="changeCalendarMonth(1)" class="p-2.5 rounded-xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 dark:hover:bg-white/15 transition-colors cursor-pointer">
                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
                         </button>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-7 gap-2 text-center mb-3">
-                    <div class="text-xs font-bold text-gray-400">Mon</div>
-                    <div class="text-xs font-bold text-gray-400">Tue</div>
-                    <div class="text-xs font-bold text-gray-400">Wed</div>
-                    <div class="text-xs font-bold text-gray-400">Thu</div>
-                    <div class="text-xs font-bold text-gray-400">Fri</div>
-                    <div class="text-xs font-bold text-gray-400">Sat</div>
-                    <div class="text-xs font-bold text-gray-400">Sun</div>
+                    <div class="text-xs font-bold text-gray-500">Mon</div>
+                    <div class="text-xs font-bold text-gray-500">Tue</div>
+                    <div class="text-xs font-bold text-gray-500">Wed</div>
+                    <div class="text-xs font-bold text-gray-500">Thu</div>
+                    <div class="text-xs font-bold text-gray-500">Fri</div>
+                    <div class="text-xs font-bold text-gray-500">Sat</div>
+                    <div class="text-xs font-bold text-gray-500">Sun</div>
                 </div>
                 <div id="calendar-grid" class="grid grid-cols-7 gap-2"></div>
             </div>
         </div>
 
-        <!-- TAB 4: MASTER LINK & PERMISSIONS -->
+        <!-- TAB 4: MASTER LINK & CODE -->
         <div id="tab-network" class="space-y-6 hidden animate-fade-in">
             <div class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow space-y-6">
                 <div>
-                    <h3 class="text-xl font-bold">Master Code Binding & Monitoring Permissions</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Link patient profiles using automatically generated master codes and authorize master caregivers.</p>
+                    <h3 class="text-xl font-bold">Master Code Binding & Permissions</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Link accounts using your unique 4-digit master code to enable caregiver alerts.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Master Code Card -->
-                    <div class="bg-gray-50 dark:bg-white/5 p-6 rounded-2xl border border-gray-200/50 dark:border-white/10 space-y-4">
+                    <div class="bg-white/60 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
                                 <i data-lucide="key" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm">System Master Code (Auto-Generated)</h4>
-                                <p class="text-xs text-gray-500">Unique secure 4-digit code assigned to this profile</p>
+                                <h4 class="font-bold text-sm">Your Master Code</h4>
+                                <p class="text-xs text-gray-500">Share this code with users to link monitoring</p>
                             </div>
                         </div>
                         <div class="text-3xl font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 py-3 px-4 rounded-xl text-center" id="display-master-code">
                             ----
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-gray-500 mb-1">Bind to Master User Code</label>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1">Bind to a Master Code</label>
                             <div class="flex space-x-2">
-                                <input type="text" id="input-bind-code" maxlength="4" placeholder="Enter 4-digit code" class="flex-1 px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-sm focus:outline-none focus:border-indigo-500 font-mono">
+                                <input type="text" id="input-bind-code" maxlength="4" placeholder="Enter 4-digit code" class="flex-1 px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 text-sm focus:outline-none focus:border-indigo-500 font-mono">
                                 <button onclick="handleBindMasterCode()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer">Bind</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Master Permissions Card -->
-                    <div class="bg-gray-50 dark:bg-white/5 p-6 rounded-2xl border border-gray-200/50 dark:border-white/10 space-y-4">
+                    <div class="bg-white/60 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/10 space-y-4">
                         <div class="flex items-center space-x-3">
                             <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-500 flex items-center justify-center">
                                 <i data-lucide="shield-alert" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm">Master Caregiver Permissions</h4>
-                                <p class="text-xs text-gray-500">Authorize monitoring & 9am/1pm/8pm escalation alerts</p>
+                                <h4 class="font-bold text-sm">Caregiver Permissions</h4>
+                                <p class="text-xs text-gray-500">Allow master monitoring & 9am/1pm/8pm escalation</p>
                             </div>
                         </div>
                         <div class="space-y-3" id="permissions-container"></div>
@@ -331,11 +328,14 @@
         </div>
     </main>
 
-    <!-- Modal: Auth / Registration -->
+    <!-- Modal: Auth / Registration & Role Selection -->
     <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
         <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full apple-shadow transform scale-95 transition-transform duration-300">
             <div class="flex items-center justify-between mb-6">
-                <h3 class="text-lg font-bold">AuraMed Cloud Authentication</h3>
+                <div>
+                    <h3 class="text-lg font-bold">Welcome to AuraMed</h3>
+                    <p class="text-xs text-gray-500">Sign in or register your account</p>
+                </div>
                 <button onclick="closeAuthModal()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
@@ -343,23 +343,24 @@
 
             <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Email Address</label>
-                    <input type="email" id="auth-email" required placeholder="aravindaksha@jpmorgan.com" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Email Address (Linked to Firebase)</label>
+                    <input type="email" id="auth-email" required placeholder="user@example.com" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Full Name</label>
-                    <input type="text" id="auth-name" required placeholder="Aravindaksha Sharma" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Full Name</label>
+                    <input type="text" id="auth-name" required placeholder="Alex Morgan" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">User Role Type</label>
-                    <select id="auth-role" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
-                        <option value="patient">Patient (Wife's Medication Tracker)</option>
-                        <option value="master">Master Caregiver / Fellow Tracker</option>
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Select Role Type</label>
+                    <select id="auth-role" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                        <option value="user">User (Tracking Daily Tablets)</option>
+                        <option value="master">Master Caregiver (Monitoring & Alerts)</option>
                     </select>
                 </div>
+
                 <div class="pt-4 flex items-center justify-end space-x-3">
-                    <button type="button" onclick="closeAuthModal()" class="px-5 py-2.5 rounded-2xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 text-sm font-semibold transition-colors cursor-pointer">Cancel</button>
-                    <button type="submit" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer">Save & Connect Cloud</button>
+                    <button type="button" onclick="closeAuthModal()" class="px-5 py-2.5 rounded-2xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 text-sm font-semibold transition-colors cursor-pointer">Cancel</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer">Continue to Dashboard</button>
                 </div>
             </form>
         </div>
@@ -377,23 +378,23 @@
 
             <form id="add-tablet-form" onsubmit="handleSaveTablet(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Tablet Name</label>
-                    <input type="text" id="input-name" required placeholder="e.g., Folvite 5MG" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Tablet Name</label>
+                    <input type="text" id="input-name" required placeholder="e.g., Vitamin C" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Dosage / Instructions</label>
-                    <input type="text" id="input-dosage" required placeholder="e.g., 1 tablet / after DINNER" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Dosage / Instructions</label>
+                    <input type="text" id="input-dosage" required placeholder="e.g., 1 tablet after dinner" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Time Slot</label>
-                    <select id="input-slot" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">Time Slot</label>
+                    <select id="input-slot" class="w-full px-4 py-3 rounded-2xl bg-white dark:bg-white/5 border border-gray-300 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                         <option value="morning">Morning (Alerts after 9:00 AM)</option>
                         <option value="afternoon">Afternoon (Alerts after 1:00 PM)</option>
                         <option value="night">Night / Dinner (Alerts after 8:00 PM)</option>
                     </select>
                 </div>
                 <div class="pt-4 flex items-center justify-end space-x-3">
-                    <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 rounded-2xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 text-sm font-semibold transition-colors cursor-pointer">Cancel</button>
+                    <button type="button" onclick="closeAddModal()" class="px-5 py-2.5 rounded-2xl bg-gray-200 dark:bg-white/5 hover:bg-gray-300 text-sm font-semibold transition-colors cursor-pointer">Cancel</button>
                     <button type="submit" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer">Save Tablet</button>
                 </div>
             </form>
@@ -402,36 +403,31 @@
 
     <!-- Application Script -->
     <script>
-        // Optional Firebase config placeholder (Replace with your actual Firebase credentials if desired)
+        // Firebase Configuration (Paste your credentials here to sync live with Firestore)
         const firebaseConfig = {
-          apiKey: "AIzaSyAk9L9jZ3YuAbDUz2vW6oD6QLv5Z9qVOJs",
-          authDomain: "aurameds.firebaseapp.com",
-          projectId: "aurameds",
-          storageBucket: "aurameds.firebasestorage.app",
-          messagingSenderId: "1047224137032",
-          appId: "1:1047224137032:web:f3576f32cb89b460aeef7d",
-          measurementId: "G-XYMX9G8WP4"
+            apiKey: "AIzaSyAk9L9jZ3YuAbDUz2vW6oD6QLv5Z9qVOJs",
+            authDomain: "aurameds.firebaseapp.com",
+            projectId: "aurameds",
+            storageBucket: "aurameds.firebasestorage.app",
+            messagingSenderId: "1047224137032",
+            appId: "1:1047224137032:web:f3576f32cb89b460aeef7d",
+            measurementId: "G-XYMX9G8WP4"
         };
 
 
         let state = {
             currentUser: {
-                email: 'aravindaksha@jpmorgan.com',
-                name: 'Aravindaksha Sharma',
-                role: 'patient',
-                masterCode: String(Math.floor(1000 + Math.random() * 9000)), // Auto-generated random 4-digit code
+                email: 'user@auramed.app',
+                name: 'Alex Morgan',
+                role: 'user', // 'user' or 'master'
+                masterCode: String(Math.floor(1000 + Math.random() * 9000)),
                 boundMasterCode: '',
                 monitorPermission: true
             },
             tablets: [
-                { id: 't1', name: 'biotin & folic acid tab', dosage: '1 tablet / after breakfast', slot: 'morning' },
-                { id: 't2', name: 'Brivaracetam 50mg', dosage: '1 tab after breakfast', slot: 'morning' },
-                { id: 't3', name: 'socril', dosage: '1 tablet / after lunch', slot: 'afternoon' },
-                { id: 't4', name: 'Folvite 5MG', dosage: '1 tablet/ after DINNER', slot: 'night' },
-                { id: 't5', name: 'susten 200', dosage: '1 tablet / after dinner', slot: 'night' },
-                { id: 't6', name: 'caltuf', dosage: '1 tablet after dinner', slot: 'night' },
-                { id: 't7', name: 'ecosprin 75mg', dosage: '1 tab after dinner', slot: 'night' },
-                { id: 't8', name: 'Brivaracetam 50mg', dosage: '1 tablet after dinner', slot: 'night' }
+                { id: 't1', name: 'Multivitamin', dosage: '1 tablet after breakfast', slot: 'morning' },
+                { id: 't2', name: 'Calcium D3', dosage: '1 tablet after lunch', slot: 'afternoon' },
+                { id: 't3', name: 'Magnesium', dosage: '1 tablet after dinner', slot: 'night' }
             ],
             logs: {},
             currentDate: new Date().toISOString().split('T')[0],
@@ -441,14 +437,13 @@
         };
 
         function loadState() {
-            const saved = localStorage.getItem('auramed_firebase_sync_state');
+            const saved = localStorage.getItem('auramed_public_state');
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
                     state.currentUser = parsed.currentUser || state.currentUser;
                     state.tablets = parsed.tablets || state.tablets;
                     state.logs = parsed.logs || state.logs;
-                    // Ensure masterCode exists if loading older state
                     if (!state.currentUser.masterCode) {
                         state.currentUser.masterCode = String(Math.floor(1000 + Math.random() * 9000));
                     }
@@ -457,7 +452,7 @@
         }
 
         function saveState() {
-            localStorage.setItem('auramed_firebase_sync_state', JSON.stringify({
+            localStorage.setItem('auramed_public_state', JSON.stringify({
                 currentUser: state.currentUser,
                 tablets: state.tablets,
                 logs: state.logs
@@ -473,7 +468,7 @@
         function switchTab(tabName) {
             ['tracker', 'manager', 'calendar', 'network'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`tab-btn-${t}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2";
+                document.getElementById(`tab-btn-${t}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-gray-200/70 dark:bg-white/5 text-gray-700 dark:text-gray-400 hover:bg-gray-300 dark:hover:bg-white/10 cursor-pointer flex items-center space-x-2";
             });
             document.getElementById(`tab-${tabName}`).classList.remove('hidden');
             document.getElementById(`tab-btn-${tabName}`).className = "px-5 py-2.5 rounded-2xl text-sm font-semibold transition-all bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 cursor-pointer flex items-center space-x-2";
@@ -487,7 +482,6 @@
             renderApp();
         }
 
-        // Toggle Tablet / Proxy Acknowledge by Master User
         function toggleTabletTaken(tabletId) {
             if (!state.logs[state.currentDate]) state.logs[state.currentDate] = {};
             state.logs[state.currentDate][tabletId] = !state.logs[state.currentDate][tabletId];
@@ -577,7 +571,6 @@
             renderCalendar();
         }
 
-        // Time-Based Escalation Check (9 AM, 1 PM, 8 PM + 15 min loop)
         function checkTimeEscalation() {
             if (state.currentUser.role !== 'master' || state.alertDismissed) return;
 
@@ -606,20 +599,20 @@
             const banner = document.getElementById('master-alert-banner');
             if (overdueSlot) {
                 banner.classList.remove('hidden');
-                document.getElementById('alert-title-heading').innerText = `Escalation Alert: ${overdueSlot} Overdue`;
-                document.getElementById('alert-message-text').innerText = `Tablets unacknowledged past scheduled time. Repeating 15-minute escalation notification active for Master Caregiver (${state.currentUser.name}).`;
+                document.getElementById('alert-title-heading').innerText = `Escalation Notice: ${overdueSlot} Overdue`;
+                document.getElementById('alert-message-text').innerText = `Medications unacknowledged past scheduled time. 15-minute escalation active for Master Caregiver (${state.currentUser.name}).`;
             } else {
                 banner.classList.add('hidden');
             }
         }
 
         function renderApp() {
-            document.getElementById('current-user-badge').innerText = `${state.currentUser.name} (${state.currentUser.role})`;
+            document.getElementById('nav-auth-btn-text').innerText = state.currentUser.name;
             document.getElementById('role-text-badge').innerText = `${state.currentUser.role.toUpperCase()} PROFILE`;
-            document.getElementById('hero-greeting').innerText = `Hello, ${state.currentUser.name}`;
+            document.getElementById('hero-greeting').innerText = `Welcome, ${state.currentUser.name}`;
             document.getElementById('hero-subtitle').innerText = state.currentUser.role === 'master'
-                ? 'Master Caregiver View: Monitoring adherence with 9 AM / 1 PM / 8 PM escalation & proxy override.'
-                : 'Patient View: Track your prescription schedule synced with master code ' + (state.currentUser.boundMasterCode || 'Unbound');
+                ? 'Master Caregiver Dashboard: Monitoring linked accounts with automated 9am/1pm/8pm alerts and proxy override.'
+                : 'User Adherence Dashboard: Track daily medications synced with master code ' + (state.currentUser.boundMasterCode || 'Unbound');
 
             document.getElementById('display-master-code').innerText = state.currentUser.masterCode;
 
@@ -631,19 +624,19 @@
                 let takenCount = 0;
 
                 if (slotTablets.length === 0) {
-                    container.innerHTML = `<div class="text-xs text-gray-400 italic py-2">No tablets scheduled</div>`;
+                    container.innerHTML = `<div class="text-xs text-gray-500 italic py-2">No tablets scheduled</div>`;
                 } else {
                     slotTablets.forEach(tablet => {
                         const isTaken = !!dayLogs[tablet.id];
                         if (isTaken) takenCount++;
 
                         const item = document.createElement('div');
-                        item.className = `p-4 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${isTaken ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-200' : 'bg-gray-50 dark:bg-white/5 border-gray-200/50 dark:border-white/10 hover:border-indigo-500/50'}`;
+                        item.className = `p-4 rounded-2xl border transition-all flex items-center justify-between cursor-pointer ${isTaken ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-200' : 'bg-white/80 dark:bg-white/5 border-gray-200 dark:border-white/10 hover:border-indigo-500/50'}`;
                         item.onclick = () => toggleTabletTaken(tablet.id);
 
                         item.innerHTML = `
                             <div class="flex items-center space-x-3">
-                                <div class="w-6 h-6 rounded-full flex items-center justify-center border transition-all ${isTaken ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-gray-300 dark:border-gray-600'}">
+                                <div class="w-6 h-6 rounded-full flex items-center justify-center border transition-all ${isTaken ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-gray-400 dark:border-gray-600'}">
                                     ${isTaken ? '<i data-lucide="check" class="w-3.5 h-3.5"></i>' : ''}
                                 </div>
                                 <div>
@@ -675,10 +668,10 @@
             tbody.innerHTML = '';
             state.tablets.forEach(t => {
                 const tr = document.createElement('tr');
-                tr.className = 'hover:bg-gray-50/50 dark:hover:bg-white/5 transition-colors';
+                tr.className = 'hover:bg-black/5 dark:hover:bg-white/5 transition-colors';
                 tr.innerHTML = `
                     <td class="py-4 px-4 font-semibold">${t.name}</td>
-                    <td class="py-4 px-4 text-gray-500 dark:text-gray-400">${t.dosage}</td>
+                    <td class="py-4 px-4 text-gray-600 dark:text-gray-400">${t.dosage}</td>
                     <td class="py-4 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-semibold capitalize bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">${t.slot}</span></td>
                     <td class="py-4 px-4 text-right">
                         <button onclick="deleteTablet('${t.id}')" class="p-2 rounded-xl text-rose-500 hover:bg-rose-500/10 transition-colors cursor-pointer" title="Delete Tablet">
@@ -693,7 +686,7 @@
             permContainer.innerHTML = `
                 <label class="flex items-center space-x-3 p-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 cursor-pointer">
                     <input type="checkbox" ${state.currentUser.monitorPermission ? 'checked' : ''} onchange="state.currentUser.monitorPermission = this.checked; saveState();" class="w-4 h-4 text-indigo-600 rounded">
-                    <span class="text-xs font-semibold">Authorize Master Caregiver to monitor all accounts & receive 9am/1pm/8pm escalation alerts</span>
+                    <span class="text-xs font-semibold">Enable Master Caregiver monitoring & 9am/1pm/8pm escalation alerts</span>
                 </label>
             `;
 
@@ -729,10 +722,10 @@
                 const isPartial = taken > 0 && taken < total;
 
                 const cell = document.createElement('div');
-                cell.className = `p-3 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer border ${dateKey === state.currentDate ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-500/10' : 'border-gray-200/50 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/5'}`;
+                cell.className = `p-3 rounded-2xl flex flex-col items-center justify-center transition-all cursor-pointer border ${dateKey === state.currentDate ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-500/10' : 'border-gray-200 dark:border-white/10 hover:bg-gray-200 dark:hover:bg-white/5'}`;
                 cell.onclick = () => { state.currentDate = dateKey; switchTab('tracker'); };
 
-                let indicator = `<div class="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700 mt-1.5"></div>`;
+                let indicator = `<div class="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-700 mt-1.5"></div>`;
                 if (isComplete) indicator = `<div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5"></div>`;
                 else if (isPartial) indicator = `<div class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5"></div>`;
 
@@ -743,9 +736,7 @@
 
         loadState();
         renderApp();
-        setInterval(checkTimeEscalation, 900000); // 15-minute escalation loop check
-
-
+        setInterval(checkTimeEscalation, 900000); // 15-minute escalation check loop
     </script>
 </body>
 </html>
