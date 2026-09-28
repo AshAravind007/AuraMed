@@ -55,7 +55,6 @@
             </div>
 
             <div class="flex items-center space-x-3">
-                <!-- Active User Selector / Login Status -->
                 <button onclick="openAuthModal()" class="flex items-center space-x-2 text-xs font-semibold px-3.5 py-2 rounded-2xl bg-indigo-50 dark:bg-white/5 border border-indigo-200/50 dark:border-white/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-white/10 transition-all cursor-pointer">
                     <i data-lucide="user-circle" class="w-4 h-4"></i>
                     <span id="current-user-badge">Sign In / Register</span>
@@ -148,21 +147,19 @@
 
         <!-- TAB 1: DAILY TRACKER -->
         <div id="tab-tracker" class="space-y-6 animate-fade-in">
-            <!-- Date Picker Bar -->
             <div class="glass-panel p-4 rounded-2xl flex items-center justify-between">
                 <button onclick="changeDate(-1)" class="p-2 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
                     <i data-lucide="chevron-left" class="w-5 h-5"></i>
                 </button>
                 <div class="text-center">
                     <div id="active-date-display" class="font-bold text-base">Today</div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400">Master or patient proxy acknowledgement active</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400">Master proxy acknowledgement enabled</div>
                 </div>
                 <button onclick="changeDate(1)" class="p-2 rounded-xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors cursor-pointer">
                     <i data-lucide="chevron-right" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <!-- Slots Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="slots-container">
                 <!-- Morning Slot -->
                 <div class="glass-panel rounded-3xl p-6 apple-shadow flex flex-col justify-between border-t-4 border-t-amber-500">
@@ -289,7 +286,7 @@
             <div class="glass-panel rounded-3xl p-6 sm:p-8 apple-shadow space-y-6">
                 <div>
                     <h3 class="text-xl font-bold">Master Code Binding & Monitoring Permissions</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Link patient profiles using 4-digit master codes and authorize master caregivers to monitor all accounts.</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Link patient profiles using automatically generated master codes and authorize master caregivers.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -300,15 +297,15 @@
                                 <i data-lucide="key" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-sm">Your Unique 4-Digit Master Code</h4>
-                                <p class="text-xs text-gray-500">Share this with patients to bind accounts</p>
+                                <h4 class="font-bold text-sm">System Master Code (Auto-Generated)</h4>
+                                <p class="text-xs text-gray-500">Unique secure 4-digit code assigned to this profile</p>
                             </div>
                         </div>
                         <div class="text-3xl font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 py-3 px-4 rounded-xl text-center" id="display-master-code">
-                            2026
+                            ----
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-gray-500 mb-1">Bind to a Master User Code</label>
+                            <label class="block text-xs font-semibold text-gray-500 mb-1">Bind to Master User Code</label>
                             <div class="flex space-x-2">
                                 <input type="text" id="input-bind-code" maxlength="4" placeholder="Enter 4-digit code" class="flex-1 px-4 py-2.5 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 text-sm focus:outline-none focus:border-indigo-500 font-mono">
                                 <button onclick="handleBindMasterCode()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer">Bind</button>
@@ -324,19 +321,17 @@
                             </div>
                             <div>
                                 <h4 class="font-bold text-sm">Master Caregiver Permissions</h4>
-                                <p class="text-xs text-gray-500">Authorize monitoring across all linked accounts</p>
+                                <p class="text-xs text-gray-500">Authorize monitoring & 9am/1pm/8pm escalation alerts</p>
                             </div>
                         </div>
-                        <div class="space-y-3" id="permissions-container">
-                            <!-- Injected permissions checklist -->
-                        </div>
+                        <div class="space-y-3" id="permissions-container"></div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Modal: Auth / Registration (Email + Name + Role + 4-Digit Code) -->
+    <!-- Modal: Auth / Registration -->
     <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
         <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-md w-full apple-shadow transform scale-95 transition-transform duration-300">
             <div class="flex items-center justify-between mb-6">
@@ -349,7 +344,7 @@
             <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Email Address</label>
-                    <input type="email5" id="auth-email" required placeholder="aravind@example.com" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
+                    <input type="email" id="auth-email" required placeholder="aravindaksha@jpmorgan.com" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Full Name</label>
@@ -362,11 +357,6 @@
                         <option value="master">Master Caregiver / Fellow Tracker</option>
                     </select>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">Your 4-Digit Master Code</label>
-                    <input type="text" id="auth-code" maxlength="4" required value="2026" class="w-full px-4 py-3 rounded-2xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:outline-none focus:border-indigo-500 text-sm font-mono tracking-widest">
-                </div>
-
                 <div class="pt-4 flex items-center justify-end space-x-3">
                     <button type="button" onclick="closeAuthModal()" class="px-5 py-2.5 rounded-2xl bg-gray-100 dark:bg-white/5 hover:bg-gray-200 text-sm font-semibold transition-colors cursor-pointer">Cancel</button>
                     <button type="submit" class="px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/30 transition-all cursor-pointer">Save & Connect Cloud</button>
@@ -410,15 +400,27 @@
         </div>
     </div>
 
-    <!-- Application Script with Firebase and Time Escalation Loop -->
+    <!-- Application Script -->
     <script>
+        // Optional Firebase config placeholder (Replace with your actual Firebase credentials if desired)
+        const firebaseConfig = {
+          apiKey: "AIzaSyAk9L9jZ3YuAbDUz2vW6oD6QLv5Z9qVOJs",
+          authDomain: "aurameds.firebaseapp.com",
+          projectId: "aurameds",
+          storageBucket: "aurameds.firebasestorage.app",
+          messagingSenderId: "1047224137032",
+          appId: "1:1047224137032:web:f3576f32cb89b460aeef7d",
+          measurementId: "G-XYMX9G8WP4"
+        };
+
+
         let state = {
             currentUser: {
                 email: 'aravindaksha@jpmorgan.com',
                 name: 'Aravindaksha Sharma',
                 role: 'patient',
-                masterCode: '2026',
-                boundMasterCode: '2026',
+                masterCode: String(Math.floor(1000 + Math.random() * 9000)), // Auto-generated random 4-digit code
+                boundMasterCode: '',
                 monitorPermission: true
             },
             tablets: [
@@ -431,7 +433,7 @@
                 { id: 't7', name: 'ecosprin 75mg', dosage: '1 tab after dinner', slot: 'night' },
                 { id: 't8', name: 'Brivaracetam 50mg', dosage: '1 tablet after dinner', slot: 'night' }
             ],
-            logs: {}, // Format: { 'YYYY-MM-DD': { tabletId: true } }
+            logs: {},
             currentDate: new Date().toISOString().split('T')[0],
             calendarMonth: new Date().getMonth(),
             calendarYear: new Date().getFullYear(),
@@ -446,6 +448,10 @@
                     state.currentUser = parsed.currentUser || state.currentUser;
                     state.tablets = parsed.tablets || state.tablets;
                     state.logs = parsed.logs || state.logs;
+                    // Ensure masterCode exists if loading older state
+                    if (!state.currentUser.masterCode) {
+                        state.currentUser.masterCode = String(Math.floor(1000 + Math.random() * 9000));
+                    }
                 } catch(e) { console.error(e); }
             }
         }
@@ -481,7 +487,7 @@
             renderApp();
         }
 
-        // Toggle Tablet / Proxy Acknowledge
+        // Toggle Tablet / Proxy Acknowledge by Master User
         function toggleTabletTaken(tabletId) {
             if (!state.logs[state.currentDate]) state.logs[state.currentDate] = {};
             state.logs[state.currentDate][tabletId] = !state.logs[state.currentDate][tabletId];
@@ -489,12 +495,10 @@
             renderApp();
         }
 
-        // Auth Modal Controls
         function openAuthModal() {
             document.getElementById('auth-email').value = state.currentUser.email;
             document.getElementById('auth-name').value = state.currentUser.name;
             document.getElementById('auth-role').value = state.currentUser.role;
-            document.getElementById('auth-code').value = state.currentUser.masterCode;
 
             const modal = document.getElementById('auth-modal');
             modal.classList.remove('hidden');
@@ -513,7 +517,6 @@
             state.currentUser.email = document.getElementById('auth-email').value;
             state.currentUser.name = document.getElementById('auth-name').value;
             state.currentUser.role = document.getElementById('auth-role').value;
-            state.currentUser.masterCode = document.getElementById('auth-code').value;
             saveState();
             closeAuthModal();
             renderApp();
@@ -574,32 +577,26 @@
             renderCalendar();
         }
 
-        // Time-Based Notification & Escalation Check (9 AM, 1 PM, 8 PM + 15 min loop)
+        // Time-Based Escalation Check (9 AM, 1 PM, 8 PM + 15 min loop)
         function checkTimeEscalation() {
             if (state.currentUser.role !== 'master' || state.alertDismissed) return;
 
             const now = new Date();
             const hours = now.getHours();
-            const minutes = now.getMinutes();
             const today = now.toISOString().split('T')[0];
 
             let overdueSlot = null;
-            // 9:00 AM check for morning
             if (hours >= 9 && hours < 13) {
                 const morningTabs = state.tablets.filter(t => t.slot === 'morning');
                 const logs = state.logs[today] || {};
                 const taken = morningTabs.filter(t => logs[t.id]).length;
                 if (morningTabs.length > 0 && taken < morningTabs.length) overdueSlot = 'Morning (9:00 AM)';
-            }
-            // 1:00 PM check for afternoon
-            else if (hours >= 13 && hours < 20) {
+            } else if (hours >= 13 && hours < 20) {
                 const aftTabs = state.tablets.filter(t => t.slot === 'afternoon');
                 const logs = state.logs[today] || {};
                 const taken = aftTabs.filter(t => logs[t.id]).length;
                 if (aftTabs.length > 0 && taken < aftTabs.length) overdueSlot = 'Afternoon (1:00 PM)';
-            }
-            // 8:00 PM check for night/dinner
-            else if (hours >= 20) {
+            } else if (hours >= 20) {
                 const nightTabs = state.tablets.filter(t => t.slot === 'night');
                 const logs = state.logs[today] || {};
                 const taken = nightTabs.filter(t => logs[t.id]).length;
@@ -610,24 +607,22 @@
             if (overdueSlot) {
                 banner.classList.remove('hidden');
                 document.getElementById('alert-title-heading').innerText = `Escalation Alert: ${overdueSlot} Overdue`;
-                document.getElementById('alert-message-text').innerText = `Tablets unacknowledged past scheduled time. Repeating 15-minute escalation alert sent to Master User (${state.currentUser.name}).`;
+                document.getElementById('alert-message-text').innerText = `Tablets unacknowledged past scheduled time. Repeating 15-minute escalation notification active for Master Caregiver (${state.currentUser.name}).`;
             } else {
                 banner.classList.add('hidden');
             }
         }
 
-        // Render App
         function renderApp() {
             document.getElementById('current-user-badge').innerText = `${state.currentUser.name} (${state.currentUser.role})`;
             document.getElementById('role-text-badge').innerText = `${state.currentUser.role.toUpperCase()} PROFILE`;
             document.getElementById('hero-greeting').innerText = `Hello, ${state.currentUser.name}`;
             document.getElementById('hero-subtitle').innerText = state.currentUser.role === 'master'
                 ? 'Master Caregiver View: Monitoring adherence with 9 AM / 1 PM / 8 PM escalation & proxy override.'
-                : 'Patient View: Track your prescription schedule synced with cloud master code ' + state.currentUser.boundMasterCode;
+                : 'Patient View: Track your prescription schedule synced with master code ' + (state.currentUser.boundMasterCode || 'Unbound');
 
             document.getElementById('display-master-code').innerText = state.currentUser.masterCode;
 
-            // Render slots
             const dayLogs = state.logs[state.currentDate] || {};
             ['morning', 'afternoon', 'night'].forEach(slot => {
                 const container = document.getElementById(`list-${slot}`);
@@ -666,7 +661,6 @@
                 document.getElementById(`badge-${slot}`).innerText = `${takenCount}/${slotTablets.length} Taken`;
             });
 
-            // Progress calculation
             const total = state.tablets.length;
             const takenTotal = state.tablets.filter(t => dayLogs[t.id]).length;
             const percent = total > 0 ? Math.round((takenTotal / total) * 100) : 0;
@@ -677,7 +671,6 @@
             document.getElementById('progress-fraction').innerText = `${takenTotal} / ${total} Taken`;
             document.getElementById('active-date-display').innerText = state.currentDate;
 
-            // Tablet Manager Table
             const tbody = document.getElementById('tablets-table-body');
             tbody.innerHTML = '';
             state.tablets.forEach(t => {
@@ -696,12 +689,11 @@
                 tbody.appendChild(tr);
             });
 
-            // Permissions Checklist
             const permContainer = document.getElementById('permissions-container');
             permContainer.innerHTML = `
                 <label class="flex items-center space-x-3 p-3 rounded-xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 cursor-pointer">
                     <input type="checkbox" ${state.currentUser.monitorPermission ? 'checked' : ''} onchange="state.currentUser.monitorPermission = this.checked; saveState();" class="w-4 h-4 text-indigo-600 rounded">
-                    <span class="text-xs font-semibold">Allow Master Caregiver to monitor all accounts & receive 9am/1pm/8pm escalation alerts</span>
+                    <span class="text-xs font-semibold">Authorize Master Caregiver to monitor all accounts & receive 9am/1pm/8pm escalation alerts</span>
                 </label>
             `;
 
@@ -749,10 +741,11 @@
             }
         }
 
-        // Initialize App & 15-minute Loop Timer
         loadState();
         renderApp();
-        setInterval(checkTimeEscalation, 900000); // Checks every 15 minutes for escalation
+        setInterval(checkTimeEscalation, 900000); // 15-minute escalation loop check
+
+
     </script>
 </body>
 </html>
